@@ -1,0 +1,10 @@
+https://www.memurai.com/blog/geospatial-queries-in-redis
+
+https://redis.io/blog/redis-7-geographic-commands/
+
+https://redis.io/glossary/geospatial-indexing/
+
+https://medium.com/metlab-my-experiments-in-tech-learning-applying/redis-vishwaroopam-part-2-exploring-geospatial-commands-de3eb7f9e9fc
+
+https://medium.com/groupon-eng/scaling-millions-of-geospatial-queries-per-minute-using-redis-7c05bcf6b4db
+
