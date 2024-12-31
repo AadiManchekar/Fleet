@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.aadi</groupId>
+		<artifactId>fleet</artifactId>
+		<version>1.0.0</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+
+	<groupId>com.aadi</groupId>
+	<artifactId>driver-notification-service</artifactId>
+
+	<version>1.0.0</version>
+	<packaging>jar</packaging>
+
+	<name>driver-notification-service</name>
+	<description>Responsible for maintaing ws connections and notifying drivers</description>
+	
+
+</project>
