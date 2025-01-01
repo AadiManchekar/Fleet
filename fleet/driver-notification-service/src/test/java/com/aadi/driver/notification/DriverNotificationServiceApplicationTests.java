@@ -7,7 +7,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import lombok.extern.slf4j.Slf4j;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,7 +37,7 @@ class DriverNotificationServiceApplicationTests {
     @BeforeEach
     void initiateDriverWSConnection() {
         
-        StandardWebSocketClient client = new StandardWebSocketClient();
+        final StandardWebSocketClient client = new StandardWebSocketClient();
 
         try {
             session = client
@@ -59,8 +58,7 @@ class DriverNotificationServiceApplicationTests {
 
     @AfterEach
     void closeDriverWSConnection() {
-        if(!session.isOpen())
-        {
+        if (!session.isOpen()) {
             log.info("Session is already closed");
             return;
         }
@@ -80,24 +78,29 @@ class DriverNotificationServiceApplicationTests {
 
     @Test 
     void isDriverConnectionPersisted() {
-        Assertions.assertTrue(driverConnectionService.isDriverConnected("123"), "Driver connection is not persisted");
+        Assertions.assertTrue(
+            driverConnectionService.isDriverConnected("123"), "Driver connection is not persisted");
     }
 
     @Test
     void isDriverIDStoredInSession() {
-        Assertions.assertEquals("123", driverConnectionService.getConnection("123").getAttributes().get("driverID"), "Driver ID is not stored in the session");
+        Assertions.assertEquals(
+            "123",
+            driverConnectionService.getConnection("123").getAttributes().get("driverID"),
+            "Driver ID is not stored in the session");
     }
 
     @Test
     void isDriverLocationUpdateReceived() {
-        String payload = """
-                {
-                    "driverID": "123",
-                    "latitude": 16.34,
-                    "longitude": 16.78
-                }
-                """;
-        TextMessage message = new TextMessage(payload);
+        final String payload =
+            """
+            {
+                "driverID": "123",
+                "latitude": 16.34,
+                "longitude": 16.78
+            }
+            """;
+        final TextMessage message = new TextMessage(payload);
         try {
             session.sendMessage(message);
         } catch (IOException e) {
@@ -119,16 +122,19 @@ class DriverNotificationServiceApplicationTests {
             e.printStackTrace();
             Assertions.fail("Test failed due to IOException");
         }
-        Assertions.assertFalse(driverConnectionService.isDriverConnected("123"), "Driver connection is not removed");
+        Assertions.assertFalse(
+            driverConnectionService.isDriverConnected("123"), "Driver connection is not removed");
     }
 
     @Test
     void getInvalidDriverConnection() {
-        Assertions.assertNull(driverConnectionService.getConnection("456"), "Driver connection is not found");
+        Assertions.assertNull(
+            driverConnectionService.getConnection("456"), "Driver connection is not found");
     }
 
     @Test
     void removeInvalidDriverConnection() {
-        Assertions.assertNull(driverConnectionService.removeConnection("456"), "Driver connection is removed");
+        Assertions.assertNull(
+            driverConnectionService.removeConnection("456"), "Driver connection is removed");
     }
 }
