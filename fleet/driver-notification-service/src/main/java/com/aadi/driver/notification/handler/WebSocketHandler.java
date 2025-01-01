@@ -39,12 +39,6 @@ public class WebSocketHandler extends TextWebSocketHandler{
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
         final String driverID = driverConnectionService.removeConnection(session.getAttributes().get("driverID").toString());
-        
-        if (driverID == null) {
-            log.error("Driver not found in driverSessions");
-            return;
-        }
-        
         log.info("Driver disconnected: {}", driverID);
     }
 }

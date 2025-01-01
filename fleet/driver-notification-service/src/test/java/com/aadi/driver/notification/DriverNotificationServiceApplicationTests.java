@@ -121,4 +121,14 @@ class DriverNotificationServiceApplicationTests {
         }
         Assertions.assertFalse(driverConnectionService.isDriverConnected("123"), "Driver connection is not removed");
     }
+
+    @Test
+    void getInvalidDriverConnection() {
+        Assertions.assertNull(driverConnectionService.getConnection("456"), "Driver connection is not found");
+    }
+
+    @Test
+    void removeInvalidDriverConnection() {
+        Assertions.assertNull(driverConnectionService.removeConnection("456"), "Driver connection is removed");
+    }
 }
