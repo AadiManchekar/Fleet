@@ -32,15 +32,25 @@
         </developer>
     </developers>
     <properties>
+        <buf.exe.path>C:\Program Files (x86)\Buf\buf.exe</buf.exe.path>
+        <bufbuild.buf>1.50.0</bufbuild.buf>
         <google.java.format>1.25.2</google.java.format>
+        <jackson.databind>2.18.2</jackson.databind>
         <java.version>17</java.version>
-        <spotless.plugin.version>2.44.2</spotless.plugin.version>
+        <protobuf-java>4.29.3</protobuf-java>
+        <protobuf-maven-plugin>2.10.3</protobuf-maven-plugin>
+        <spotless.plugin>2.44.2</spotless.plugin>
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>${protobuf-java}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -66,7 +76,7 @@
             <plugin>
                 <groupId>com.diffplug.spotless</groupId>
                 <artifactId>spotless-maven-plugin</artifactId>
-                <version>${spotless.plugin.version}</version>
+                <version>${spotless.plugin}</version>
                 <configuration>
                     <pom>
                         <includes>
@@ -89,7 +99,6 @@
                             <sortDependencyManagement>groupId,artifactId</sortDependencyManagement>
                             <sortDependencyExclusions>groupId,artifactId</sortDependencyExclusions>
                             <sortPlugins>groupId,artifactId</sortPlugins>
-                            <sortPlugins />
                             <sortProperties>true</sortProperties>
                             <sortModules>true</sortModules>
                             <sortExecutions>true</sortExecutions>
@@ -100,6 +109,7 @@
                     <formats>
                         <format>
                             <includes>
+                                <include>*.gitignore</include>
                                 <include>**/*.gitignore</include>
                             </includes>
                             <trimTrailingWhitespace />
@@ -110,12 +120,50 @@
                             </indent>
                         </format>
                     </formats>
-                    <markdown>
+                    <protobuf>
                         <includes>
-                            <include>**/*.md</include>
-                            <include>*.md</include>
+                            <include>**/*.proto</include>
+                            <include>*.proto</include>
                         </includes>
-                    </markdown>
+                        <buf>
+                            <pathToExe>${buf.exe.path}</pathToExe>
+                            <version>${bufbuild.buf}</version>
+                        </buf>
+                    </protobuf>
+                    <json>
+                        <includes>
+                            <include>**/*.json</include>
+                            <include>*.json</include>
+                        </includes>
+                        <jackson>
+                            <version>${jackson.databind}</version>
+                            <features>
+                                <INDENT_OUTPUT>true</INDENT_OUTPUT>
+                                <ORDER_MAP_ENTRIES_BY_KEYS>true</ORDER_MAP_ENTRIES_BY_KEYS>
+                            </features>
+                            <jsonFeatures>
+                                <QUOTE_FIELD_NAMES>true</QUOTE_FIELD_NAMES>
+                            </jsonFeatures>
+                            <spaceBeforeSeparator>false</spaceBeforeSeparator>
+                        </jackson>
+                    </json>
+                    <yaml>
+                        <includes>
+                            <include>**/*.yaml</include>
+                            <include>*.yaml</include>
+                        </includes>
+                        <jackson>
+                            <version>${jackson.databind}</version>
+                            <features>
+                                <INDENT_OUTPUT>true</INDENT_OUTPUT>
+                                <ORDER_MAP_ENTRIES_BY_KEYS>false</ORDER_MAP_ENTRIES_BY_KEYS>
+                            </features>
+                            <yamlFeatures>
+                                <WRITE_DOC_START_MARKER>true</WRITE_DOC_START_MARKER>
+                                <MINIMIZE_QUOTES>false</MINIMIZE_QUOTES>
+                            </yamlFeatures>
+                        </jackson>
+                    </yaml>
                     <java>
                         <includes>
                             <include>*.java</include>
@@ -159,6 +207,21 @@
                             <goal>apply</goal>
                         </goals>
                         <phase>validate</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>io.github.ascopes</groupId>
+                <artifactId>protobuf-maven-plugin</artifactId>
+                <version>${protobuf-maven-plugin}</version>
+                <configuration>
+                    <protocVersion>${protobuf-java}</protocVersion>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>

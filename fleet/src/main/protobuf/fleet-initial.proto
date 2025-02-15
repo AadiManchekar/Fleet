@@ -1,0 +1,11 @@
+// just a test proto created to validate spotless protobuf formatting
+syntax = "proto3";
+package fleet;
+
+option java_outer_classname = "LocationProto";
+option java_package = "com.fleet.protobuf";
+
+message location {
+  string latitude = 1;
+  string longitude = 2;
+}
