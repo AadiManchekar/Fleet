@@ -33,16 +33,17 @@
         </developer>
     </developers>
     <properties>
-        <buf.exe.path>C:\Program Files (x86)\Buf\buf.exe</buf.exe.path>
         <bufbuild.buf>1.50.0</bufbuild.buf>
         <google.java.format>1.25.2</google.java.format>
         <jackson.databind>2.18.2</jackson.databind>
         <java.version>17</java.version>
+        <linux.buf.exe.path>/usr/local/bin/buf</linux.buf.exe.path>
         <protobuf-java>4.29.3</protobuf-java>
         <protobuf-maven-plugin>2.10.3</protobuf-maven-plugin>
         <rest-assured>5.5.1</rest-assured>
         <spotless.plugin>2.44.2</spotless.plugin>
         <springdoc.openapi>2.8.4</springdoc.openapi>
+        <windows.buf.exe.path>C:\Program Files (x86)\Buf\buf.exe</windows.buf.exe.path>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -283,4 +284,28 @@
             </plugin>
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>windows</id>
+            <activation>
+                <os>
+                    <family>Windows</family>
+                </os>
+            </activation>
+            <properties>
+                <buf.exe.path>${windows.buf.exe.path}</buf.exe.path>
+            </properties>
+        </profile>
+        <profile>
+            <id>linux</id>
+            <activation>
+                <os>
+                    <family>unix</family>
+                </os>
+            </activation>
+            <properties>
+                <buf.exe.path>${linux.buf.exe.path}</buf.exe.path>
+            </properties>
+        </profile>
+    </profiles>
 </project>

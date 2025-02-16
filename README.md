@@ -6,7 +6,7 @@ Fleet is a Bike &amp; Cab aggregator application.
 1. Code editor, Java, Maven, docker setup done.
 2. If buf cli isnt installed refer: https://github.com/bufbuild/buf/releases
 3. in my windows laptop, I installed buf-Windows-x86_64.exe, renamed it to buf.exe and created a new folder C:\Program Files (x86)\Buf and pasted it there, added it in environment variable.
-4. `buf --version` should work.
+4. `buf --version` should work. copy the version and edit the property <bufbuild.buf> in parent pom.xml
 5. if in windows and using 1.50.0 buf cli version then you might need to add a custom command
 
     diff.bat
@@ -14,7 +14,7 @@ Fleet is a Bike &amp; Cab aggregator application.
     @echo off
     fc %1 %2
     ```
-
+6. For unix make sure your buf is installed in /usr/local/bin/buf path
 
 
 ### Challenges faced
