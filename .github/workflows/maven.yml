@@ -16,10 +16,20 @@ jobs:
         java-version: "17"
         distribution: "temurin"
         cache: "maven"
-    - name: "setup buf"
-      uses: "bufbuild/buf-setup-action@v1.50.0"
-      with:
-        version: "1.50.0"
+    - name: "Install buf"
+      run: |
+        ARCH=$(uname -m)
+        if [ "$ARCH" = "x86_64" ]; then
+          ARCH="x86_64"
+        elif [ "$ARCH" = "aarch64" ]; then
+          ARCH="arm64"
+        else
+          echo "Unsupported architecture: $ARCH"
+          exit 1
+        fi
+        echo "Architecture: $ARCH"
+        curl -sSL "https://github.com/bufbuild/buf/releases/download/v1.50.0/buf-Linux-${ARCH}" -o /usr/local/bin/buf
+        chmod +x /usr/local/bin/buf
     - name: "Build with Maven"
       run: |
         cd fleet
