@@ -1,6 +1,10 @@
 # Fleet
 Fleet is a Bike &amp; Cab aggregator application.
 
+## Fleet HLD
+
+![Fleet HLD](./docs/images/Fleet-HLD.png)
+
 
 ### Prerequisites
 1. Code editor, Java, Maven, docker setup done.
