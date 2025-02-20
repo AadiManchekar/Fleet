@@ -42,3 +42,4 @@ Fleet is a Bike &amp; Cab aggregator application.
 3. Issues with mvn dependency management, this blog helped to understand things in better way
     - link referred: 
         - https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Importing_Dependencies
+        - https://stackoverflow.com/questions/921599/declare-dependency-in-dependencymanagement-section-even-if-dependency-not-used
