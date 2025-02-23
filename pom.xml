@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.2</version>
+        <version>3.4.3</version>
         <relativePath />
         <!-- lookup parent from repository -->
     </parent>
@@ -44,8 +44,8 @@
         <protobuf-java>4.29.3</protobuf-java>
         <protobuf-maven-plugin>2.10.4</protobuf-maven-plugin>
         <rest-assured>5.5.1</rest-assured>
-        <spotless.plugin>2.44.2</spotless.plugin>
-        <springdoc.openapi>2.8.4</springdoc.openapi>
+        <spotless.plugin>2.44.3</spotless.plugin>
+        <springdoc.openapi>2.8.5</springdoc.openapi>
         <windows.buf.exe.path>C:\Program Files (x86)\Buf\buf.exe</windows.buf.exe.path>
     </properties>
     <dependencyManagement>
