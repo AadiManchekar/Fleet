@@ -41,6 +41,8 @@
         <jackson.databind>2.18.2</jackson.databind>
         <java.version>17</java.version>
         <linux.buf.exe.path>/usr/local/bin/buf</linux.buf.exe.path>
+        <mvn-clean-plugin>3.4.1</mvn-clean-plugin>
+        <mvn-resources-plugin>3.3.1</mvn-resources-plugin>
         <protobuf-java>4.29.3</protobuf-java>
         <protobuf-maven-plugin>2.10.4</protobuf-maven-plugin>
         <rest-assured>5.5.1</rest-assured>
@@ -227,6 +229,14 @@
                         </licenseHeader>
                     </java>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>apply</goal>
+                        </goals>
+                        <phase>validate</phase>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>io.github.ascopes</groupId>
@@ -235,9 +245,22 @@
                 <configuration>
                     <protocVersion>${protobuf-java}</protocVersion>
                     <sourceDirectories>
-                        <sourceDirectory>${project.basedir}/protobuf/fleet</sourceDirectory>
+                        <sourceDirectory>${project.basedir}/src/main/protobuf</sourceDirectory>
                     </sourceDirectories>
                     <outputDirectory>${project.build.directory}/generated-sources/protobuf</outputDirectory>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>${mvn-clean-plugin}</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${basedir}/src/main/protobuf</directory>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                    </filesets>
                 </configuration>
             </plugin>
             <plugin>
@@ -251,6 +274,11 @@
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${mvn-resources-plugin}</version>
             </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
