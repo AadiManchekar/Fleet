@@ -17,11 +17,13 @@ jobs:
         distribution: "temurin"
         cache: "maven"
     - name: "Resolve Maven Dependencies"
+      continue-on-error: true
       run: |
         mvn dependency:resolve
     - name: "Resolve Maven Plugins"
+      continue-on-error: true
       run: |
-        mvn plugin:resolve
+        mvn dependency:resolve-plugins
     - name: "Install buf"
       continue-on-error: false
       run: |
