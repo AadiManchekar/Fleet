@@ -21,6 +21,20 @@ Fleet is a Bike &amp; Cab aggregator application.
 6. For unix make sure your buf is installed in /usr/local/bin/buf path
 
 
+### Run
+1. Compile the project:
+    - Windows
+    ```
+    cd tools\build
+    sh compile.sh
+    ```
+    - Linux
+    ```
+    cd tools/build
+    ./compile.sh
+    ```
+
+
 ### Challenges faced
 1. Formatting was a big challenge and wanted to maintain consitent formatting, found spotless maven plugin that solves most of the things and we can specify formatting for even various types of lang
     - links referred:
@@ -43,3 +57,12 @@ Fleet is a Bike &amp; Cab aggregator application.
     - link referred: 
         - https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Importing_Dependencies
         - https://stackoverflow.com/questions/921599/declare-dependency-in-dependencymanagement-section-even-if-dependency-not-used
+
+4. We store all our proto files in fleet-protobuf, if any module needs any proto file from it then we have maven plugin that copies the file into module's subfolder. The issue was Github CI was failing because it was unable to find the proto files in modules subfolder. which was very awkward because in my local things were fine and build was success. 
+    - RCA: Compilation of proto was happening before copying of proto files in module's subfolder. It wasnt caught in local mainly because in my .vscode, setting.json
+    ```
+    {
+        "java.configuration.updateBuildConfiguration" : "automatic"
+    }   
+    ```
+    This was causing automatic trigger of pom.xml which was beforehand copying files rather doing it in runtime. This was caught by github CI. because it doesnt have automatic build configuration which vscode does :)
