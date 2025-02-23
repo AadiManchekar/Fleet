@@ -20,7 +20,7 @@ print_line_break
 
 echo -e "\033[0;32mACTION: mvn install\033[0m"  # Dark green
 print_line_break
-mvn install
+mvn install -X
 print_line_break
 
 echo -e "\033[0;32mSUCCESS\033[0m"  # Dark green
