@@ -43,7 +43,7 @@
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>
-                        <phase>generate-sources</phase>
+                        <phase>initialize</phase>
                         <configuration>
                             <outputDirectory>${basedir}/src/main/protobuf</outputDirectory>
                             <resources>
