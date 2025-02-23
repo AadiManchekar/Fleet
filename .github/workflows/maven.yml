@@ -16,6 +16,12 @@ jobs:
         java-version: "17"
         distribution: "temurin"
         cache: "maven"
+    - name: "Resolve Maven Dependencies"
+      run: |
+        mvn dependency:resolve
+    - name: "Resolve Maven Plugins"
+      run: |
+        mvn plugin:resolve
     - name: "Install buf"
       continue-on-error: false
       run: |
@@ -46,6 +52,7 @@ jobs:
       run: |
         pwd
         ls
+        cat fleet-protobuf/location/location.proto
         cd driver-connection-service/src/main
         pwd
         ls
