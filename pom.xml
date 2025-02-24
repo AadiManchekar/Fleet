@@ -34,6 +34,7 @@
     </developers>
     <modules>
         <module>driver-connection-service</module>
+        <module>ride-booking-service</module>
     </modules>
     <properties>
         <bufbuild.buf>1.50.0</bufbuild.buf>
