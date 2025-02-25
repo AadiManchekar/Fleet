@@ -1,10 +1,25 @@
 # Fleet
 Fleet is a Bike &amp; Cab aggregator application.
 
+---
+
 ## Fleet HLD
+<p align="center">
+    <img src="./docs/images/Fleet-HLD.png" alt="Fleet HLD"/>
+    <br/>
+    The high-level diagram depicts Fleet's overall microservice architecture.
+</p>
 
-![Fleet HLD](./docs/images/Fleet-HLD.png)
+---
 
+## Fleet's Clean-Code Architecture
+<p align="center">
+    <img src="./docs/images/Fleet-Clean-Code-Architecture.png" alt="Fleet Clean-Code Architecture"/>
+    <br/>
+    The diagram illustrates the clean code architecture principles to be adhered to when developing for Fleet.
+</p>
+
+---
 
 ### Prerequisites
 1. Code editor, Java, Maven, docker setup done.
@@ -20,6 +35,7 @@ Fleet is a Bike &amp; Cab aggregator application.
     ```
 6. For unix make sure your buf is installed in /usr/local/bin/buf path
 
+---
 
 ### Run
 1. Compile the project:
@@ -34,6 +50,7 @@ Fleet is a Bike &amp; Cab aggregator application.
     ./compile.sh
     ```
 
+---
 
 ### Challenges faced
 1. Formatting was a big challenge and wanted to maintain consitent formatting, found spotless maven plugin that solves most of the things and we can specify formatting for even various types of lang
