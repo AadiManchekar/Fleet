@@ -1,0 +1,18 @@
+---
+spring:
+  application:
+    name: "init-vault"
+  cloud:
+    vault:
+      uri: "http://127.0.0.1:8200"
+      token: "00000000-0000-0000-0000-000000000000"
+      generic:
+        enabled: false
+      kv:
+        enabled: true
+        backend: "secret"
+        default-context: "fleet"
+        version: 2
+logging:
+  level:
+    org.springframework.cloud.vault: "DEBUG"

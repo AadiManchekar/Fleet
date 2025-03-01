@@ -34,6 +34,7 @@
     </developers>
     <modules>
         <module>driver-connection-service</module>
+        <module>init-vault</module>
         <module>ride-booking-service</module>
     </modules>
     <properties>
@@ -48,6 +49,7 @@
         <protobuf-maven-plugin>2.10.4</protobuf-maven-plugin>
         <rest-assured>5.5.1</rest-assured>
         <spotless.plugin>2.44.3</spotless.plugin>
+        <spring-cloud.version>2024.0.0</spring-cloud.version>
         <springdoc.openapi>2.8.5</springdoc.openapi>
         <windows.buf.exe.path>C:\Program Files (x86)\Buf\buf.exe</windows.buf.exe.path>
     </properties>
@@ -58,6 +60,13 @@
                 <artifactId>rest-assured</artifactId>
                 <version>${rest-assured}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -79,6 +88,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-vault-config</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.kafka</groupId>
