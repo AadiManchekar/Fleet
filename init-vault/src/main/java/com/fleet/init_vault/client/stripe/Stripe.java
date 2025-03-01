@@ -49,7 +49,7 @@ public class Stripe {
         Map<String, Object> data = new HashMap<>();
         data.put("data", secrets);
 
-        vaultTemplate.write("secret/data/api/sendgrid/key", data);
+        vaultTemplate.write("secret/data/api/stripe/key", data);
         log.info("Stripe API Key has been written to Vault");
     }
 }
