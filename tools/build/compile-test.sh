@@ -21,6 +21,8 @@ function print_error {
 print_line_break
 cd $(dirname "$0")/../../
 echo -e "\033[0;33mDIRECTORY: $(pwd)\033[0m"  # Dark yellow
+ls
+env
 print_line_break
 
 # MVN CLEAN

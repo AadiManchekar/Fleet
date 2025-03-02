@@ -51,7 +51,7 @@ jobs:
       with:
         compose-file: "./tools/docker/docker-compose.yaml"
       env:
-        GITHUB_CI: true
+        GITHUB_CI: "true"
 
     - name: "Compile and Test"
       continue-on-error: true
