@@ -50,8 +50,6 @@ jobs:
       uses: hoverkraft-tech/compose-action@v2.0.1
       with:
         compose-file: "./tools/docker/docker-compose.yaml"
-      env:
-        GITHUB_CI: "true"
 
     - name: "Compile and Test"
       continue-on-error: true

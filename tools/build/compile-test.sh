@@ -21,8 +21,6 @@ function print_error {
 print_line_break
 cd $(dirname "$0")/../../
 echo -e "\033[0;33mDIRECTORY: $(pwd)\033[0m"  # Dark yellow
-ls
-env
 print_line_break
 
 # MVN CLEAN
@@ -33,7 +31,7 @@ mvn clean
 print_line_break
 
 # Skip docker compose up if running in GitHub CI as it is already up by previous stage
-if [ "$GITHUB_CI" != "true" ]; then
+if [ "$GITHUB_ACTIONS" != "true" ]; then
     echo -e "\033[0;32mACTION: docker compose up -d\033[0m"  # Dark green
     print_line_break
     echo "Starting up the docker compose..."
