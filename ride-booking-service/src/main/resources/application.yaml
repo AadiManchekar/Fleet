@@ -1,7 +1,7 @@
 ---
 spring:
   application:
-    name: init-vault
+    name: ride-booking-service
   cloud:
     vault:
       uri: http://127.0.0.1:8200
