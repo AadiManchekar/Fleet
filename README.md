@@ -99,6 +99,8 @@ Fleet is a Bike &amp; Cab aggregator application.
         - https://medium.com/@narasimha4789/integrate-hashicorp-vault-in-spring-boot-application-to-read-application-secrets-using-docker-aa52b417f484
         - https://medium.com/@martin.hodges/how-to-set-up-dynamic-secrets-for-postgres-using-vault-and-spring-boot-on-kubernetes-757f759d22b4
         - https://medium.com/@eminyildiz122/vault-spring-boot-integration-5e137b2ff79c
+        - https://youtu.be/E9XDfOVNN2U?si=VrZnWwjoMn1Qb-P9
+        - https://cloud.spring.io/spring-cloud-vault/multi/multi_vault.config.backends.html
 
 
 6. Noticed Github Actions Cache has 7 caches and some of them are two weeks old. 
