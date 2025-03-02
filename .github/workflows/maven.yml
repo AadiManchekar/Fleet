@@ -45,12 +45,19 @@ jobs:
       continue-on-error: false
       run: mvn spotless:check
 
-    - name: "Compile"
+    - name: "Spin up Docker Compose"
+      continue-on-error: false
+      uses: hoverkraft-tech/compose-action@v2.0.1
+      with:
+        compose-file: "./tools/docker/docker-compose.yaml"
+
+    - name: "Compile and Test"
       continue-on-error: true
       run: |
         cd tools/build
         chmod +x ./compile.sh
-        ./compile.sh
+        chmod +x ./compile-test.sh
+        ./compile-test.sh
 
     - name: "Dependabot - Update dependency graph"
       uses: "advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6"
