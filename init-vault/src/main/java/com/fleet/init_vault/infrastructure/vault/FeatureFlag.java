@@ -23,11 +23,13 @@ import jakarta.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 import org.springframework.vault.core.VaultTemplate;
 
 @Component
 @Slf4j
+@DependsOn("vaultHealthChecker")
 public class FeatureFlag {
 
     private final VaultTemplate vaultTemplate;

@@ -102,7 +102,6 @@ Fleet is a Bike &amp; Cab aggregator application.
         - https://youtu.be/E9XDfOVNN2U?si=VrZnWwjoMn1Qb-P9
         - https://cloud.spring.io/spring-cloud-vault/multi/multi_vault.config.backends.html
 
-
 6. Noticed Github Actions Cache has 7 caches and some of them are two weeks old. 
     - So there was a necessity to auto delete cache after certain time. 
         - links referred:
@@ -119,3 +118,7 @@ Fleet is a Bike &amp; Cab aggregator application.
         permissions:
             actions: write
         ```
+
+7. We wanted beans to be created in custom order in init-vault. Requirement was to first run bean that runs health check of the vault.
+    - links referred
+        - https://www.baeldung.com/spring-depends-on#:~:text=1.-,Overview,annotation%20for%20managing%20initialization%20order.

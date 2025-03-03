@@ -17,41 +17,39 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-package com.fleet.init_vault.client.stripe;
+package com.fleet.init_vault.infrastructure.vault;
 
 import jakarta.annotation.PostConstruct;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 import org.springframework.vault.core.VaultTemplate;
+import org.springframework.vault.support.VaultHealth;
 
 @Component
 @Slf4j
-@DependsOn("vaultHealthChecker")
-public class Stripe {
-
+public class VaultHealthChecker {
     private final VaultTemplate vaultTemplate;
 
-    public Stripe(VaultTemplate vaultTemplate) {
+    public VaultHealthChecker(VaultTemplate vaultTemplate) {
         this.vaultTemplate = vaultTemplate;
     }
 
     @PostConstruct
     public void init() {
-        writeSecretsToVault();
+        checkVaultHealth();
     }
 
-    private void writeSecretsToVault() {
-        Map<String, String> secrets = new HashMap<>();
-        secrets.put("key", UUID.randomUUID().toString());
+    private void checkVaultHealth() {
+        VaultHealth health = vaultTemplate.opsForSys().health();
 
-        Map<String, Object> data = new HashMap<>();
-        data.put("data", secrets);
-
-        vaultTemplate.write("secret/data/api/stripe/key", data);
-        log.info("Stripe API Key has been written to Vault");
+        if (!health.isInitialized()) {
+            log.error("Vault is not initialized. Initialize it to continue");
+            throw new RuntimeException("Vault is not initialized, health: " + health);
+        } else if (health.isSealed()) {
+            log.error("Vault is sealed. Unseal it to continue");
+            throw new RuntimeException("Vault is sealed, health: " + health);
+        } else {
+            log.info("Vault is unsealed and initialized");
+        }
     }
 }

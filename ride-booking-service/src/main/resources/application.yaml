@@ -16,3 +16,7 @@ spring:
 logging:
   level:
     org.springframework.cloud.vault: DEBUG
+management:
+  health:
+    vault:
+      enabled: true
