@@ -20,5 +20,17 @@ services:
     volumes:
     - vault-volume:/data
     command: server -dev -dev-root-token-id="00000000-0000-0000-0000-000000000000"
+  postgres:
+    image: postgres:17.4
+    container_name: postgres-0
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespassword
+    ports:
+    - 5432:5432
+    volumes:
+    - postgres-volume:/var/lib/postgresql/data
+    - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
 volumes:
   vault-volume: null
+  postgres-volume: null
