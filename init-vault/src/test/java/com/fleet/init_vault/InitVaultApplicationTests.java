@@ -19,10 +19,24 @@
 */
 package com.fleet.init_vault;
 
+import com.fleet.init_vault.client.google_map.GoogleMapTest;
+import com.fleet.init_vault.client.send_grid.SendGridTest;
+import com.fleet.init_vault.client.stripe.StripeTest;
+import com.fleet.init_vault.infrastructure.vault.FeatureFlagTest;
 import org.junit.jupiter.api.Test;
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.Suite;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
+@Suite
+@SelectClasses({
+    InitVaultApplicationTests.class,
+    GoogleMapTest.class,
+    SendGridTest.class,
+    StripeTest.class,
+    FeatureFlagTest.class
+})
 class InitVaultApplicationTests {
 
     @Test

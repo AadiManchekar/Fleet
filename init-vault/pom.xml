@@ -15,6 +15,12 @@
     <version>0.0.1</version>
     <name>init-vault</name>
     <description>Initializes vault for Fleet</description>
+    <dependencies>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite</artifactId>
+        </dependency>
+    </dependencies>
     <build>
         <plugins>
             <plugin>

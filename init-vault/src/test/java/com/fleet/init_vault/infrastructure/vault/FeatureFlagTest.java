@@ -29,6 +29,8 @@ import java.net.URISyntaxException;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse.BodyHandlers;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
 @Slf4j
@@ -44,7 +46,7 @@ public class FeatureFlagTest extends AbstractVaultClientTest {
                     HttpRequest.newBuilder()
                             .uri(
                                     new URI(
-                                            "http://localhost:8200/v1/secret/data/internal/feature_flag/differentiateVehicleType"))
+                                            "http://localhost:8200/v1/secret/data/internal/feature_flag"))
                             .headers("X-Vault-Token", VAULT_TOKEN)
                             .GET()
                             .build();
@@ -55,10 +57,20 @@ public class FeatureFlagTest extends AbstractVaultClientTest {
                     response.body(), "Feature Flag differentiateVehicleType API response is null");
             assertEquals(false, response.body().isBlank());
             assertEquals(false, response.body().isEmpty());
-        } catch (URISyntaxException | IOException | InterruptedException e) {
+
+            // Parse the JSON response and check the value of the feature flag
+            JSONObject jsonResponse = new JSONObject(response.body());
+            JSONObject data = jsonResponse.getJSONObject("data").getJSONObject("data");
+            boolean differentiateVehicleType = data.getBoolean("differentiateVehicleType");
+            assertEquals(
+                    false,
+                    differentiateVehicleType,
+                    "Feature flag differentiateVehicleType should be false");
+        } catch (URISyntaxException | IOException | InterruptedException | JSONException e) {
             log.error(
                     "Error occurred while sending request to Feature Flag differentiateVehicleType"
-                            + " API");
+                            + " API",
+                    e);
         }
     }
 
@@ -69,7 +81,7 @@ public class FeatureFlagTest extends AbstractVaultClientTest {
                     HttpRequest.newBuilder()
                             .uri(
                                     new URI(
-                                            "http://localhost:8200/v1/secret/data/internal/feature_flag/enableAutoIncrementSearchRadius"))
+                                            "http://localhost:8200/v1/secret/data/internal/feature_flag"))
                             .headers("X-Vault-Token", VAULT_TOKEN)
                             .GET()
                             .build();
@@ -81,10 +93,21 @@ public class FeatureFlagTest extends AbstractVaultClientTest {
                     "Feature Flag enableAutoIncrementSearchRadius API response is null");
             assertEquals(false, response.body().isBlank());
             assertEquals(false, response.body().isEmpty());
-        } catch (URISyntaxException | IOException | InterruptedException e) {
+
+            // Parse the JSON response and check the value of the feature flag
+            JSONObject jsonResponse = new JSONObject(response.body());
+            JSONObject data = jsonResponse.getJSONObject("data").getJSONObject("data");
+            boolean enableAutoIncrementSearchRadius =
+                    data.getBoolean("enableAutoIncrementSearchRadius");
+            assertEquals(
+                    false,
+                    enableAutoIncrementSearchRadius,
+                    "Feature flag enableAutoIncrementSearchRadius should be false");
+        } catch (URISyntaxException | IOException | InterruptedException | JSONException e) {
             log.error(
                     "Error occurred while sending request to Feature Flag"
-                            + " enableAutoIncrementSearchRadius API");
+                            + " enableAutoIncrementSearchRadius API",
+                    e);
         }
     }
 }
