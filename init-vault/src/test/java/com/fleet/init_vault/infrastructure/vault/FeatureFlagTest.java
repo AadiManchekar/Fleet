@@ -52,7 +52,6 @@ public class FeatureFlagTest extends AbstractVaultClientTest {
                             .build();
 
             response = client.send(request, BodyHandlers.ofString());
-            log.info("Differentiate Vehicle Type Feature Flag: {}", response.body());
             assertNotNull(
                     response.body(), "Feature Flag differentiateVehicleType API response is null");
             assertEquals(false, response.body().isBlank());
@@ -87,7 +86,6 @@ public class FeatureFlagTest extends AbstractVaultClientTest {
                             .build();
 
             response = client.send(request, BodyHandlers.ofString());
-            log.info("Enable Auto Increment Search Radius Feature Flag: {}", response.body());
             assertNotNull(
                     response.body(),
                     "Feature Flag enableAutoIncrementSearchRadius API response is null");
