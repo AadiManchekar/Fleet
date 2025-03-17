@@ -69,9 +69,9 @@ services:
     container_name: kafka-ui
     image: provectuslabs/kafka-ui:v0.7.2
     ports:
-      - 7080:8080
+    - 7080:8080
     depends_on:
-      - kafka-0
+    - kafka-0
     environment:
       KAFKA_CLUSTERS_0_NAME: kafka-0
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-0:29092
