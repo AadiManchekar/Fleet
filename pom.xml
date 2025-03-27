@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+        xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.4.4</version>
+        <relativePath />
+        <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.aadi</groupId>
+    <artifactId>fleet</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>fleet</name>
+    <description>Demo project for Spring Boot</description>
+    <licenses>
+        <license />
+    </licenses>
+    <developers>
+        <developer>
+            <id>1</id>
+            <name>Aadi Manchekar</name>
+            <email>aadimanchekar2002@gmail.com</email>
+            <roles>
+                <role>Cloud Backend Developer</role>
+                <role>Devops</role>
+            </roles>
+            <properties>
+                <url>https://github.com/AadiManchekar</url>
+                <url>https://leetcode.com/u/System_Debt/</url>
+            </properties>
+        </developer>
+    </developers>
+    <properties>
+        <jackson.databind>2.18.3</jackson.databind>
+        <java.version>17</java.version>
+        <spotless.plugin>2.44.3</spotless.plugin>
+        <springdoc.openapi.webmvc>2.8.5</springdoc.openapi.webmvc>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${springdoc.openapi.webmvc}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
+                <version>${spotless.plugin}</version>
+                <configuration>
+                    <pom>
+                        <includes>
+                            <include>pom.xml</include>
+                            <include>**/pom.xml</include>
+                        </includes>
+                        <sortPom>
+                            <encoding>UTF-8</encoding>
+                            <lineSeparator>\n</lineSeparator>
+                            <expandEmptyElements>false</expandEmptyElements>
+                            <spaceBeforeCloseEmptyElement>false</spaceBeforeCloseEmptyElement>
+                            <keepBlankLines>false</keepBlankLines>
+                            <endWithNewline>true</endWithNewline>
+                            <nrOfIndentSpace>4</nrOfIndentSpace>
+                            <indentBlankLines>false</indentBlankLines>
+                            <indentSchemaLocation>false</indentSchemaLocation>
+                            <indentAttribute>all</indentAttribute>
+                            <predefinedSortOrder>recommended_2008_06</predefinedSortOrder>
+                            <sortDependencies>scope,artifactId</sortDependencies>
+                            <sortDependencyManagement>groupId,artifactId</sortDependencyManagement>
+                            <sortDependencyExclusions>groupId,artifactId</sortDependencyExclusions>
+                            <sortPlugins>groupId,artifactId</sortPlugins>
+                            <sortProperties>true</sortProperties>
+                            <sortModules>false</sortModules>
+                            <sortExecutions>true</sortExecutions>
+                            <spaceBeforeCloseEmptyElement>true</spaceBeforeCloseEmptyElement>
+                            <quiet>true</quiet>
+                        </sortPom>
+                    </pom>
+                    <formats>
+                        <format>
+                            <includes>
+                                <include>*.gitignore</include>
+                                <include>**/*.gitignore</include>
+                            </includes>
+                            <trimTrailingWhitespace />
+                            <endWithNewline />
+                            <indent>
+                                <spaces>true</spaces>
+                                <spacesPerTab>4</spacesPerTab>
+                            </indent>
+                        </format>
+                    </formats>
+                    <json>
+                        <includes>
+                            <include>**/*.json</include>
+                            <include>*.json</include>
+                        </includes>
+                        <jackson>
+                            <version>${jackson.databind}</version>
+                            <features>
+                                <INDENT_OUTPUT>true</INDENT_OUTPUT>
+                                <ORDER_MAP_ENTRIES_BY_KEYS>true</ORDER_MAP_ENTRIES_BY_KEYS>
+                            </features>
+                            <jsonFeatures>
+                                <QUOTE_FIELD_NAMES>true</QUOTE_FIELD_NAMES>
+                            </jsonFeatures>
+                            <spaceBeforeSeparator>false</spaceBeforeSeparator>
+                        </jackson>
+                    </json>
+                    <yaml>
+                        <includes>
+                            <include>**/*.yaml</include>
+                            <include>*.yaml</include>
+                        </includes>
+                        <jackson>
+                            <version>${jackson.databind}</version>
+                            <features>
+                                <INDENT_OUTPUT>true</INDENT_OUTPUT>
+                                <ORDER_MAP_ENTRIES_BY_KEYS>false</ORDER_MAP_ENTRIES_BY_KEYS>
+                            </features>
+                            <yamlFeatures>
+                                <WRITE_DOC_START_MARKER>true</WRITE_DOC_START_MARKER>
+                                <MINIMIZE_QUOTES>true</MINIMIZE_QUOTES>
+                            </yamlFeatures>
+                        </jackson>
+                    </yaml>
+                    <java>
+                        <includes>
+                            <include>*.java</include>
+                            <include>**/*.java</include>
+                        </includes>
+                        <removeUnusedImports />
+                        <formatAnnotations />
+                        <importOrder />
+                        <licenseHeader>
+                            <content>/*
+    Fleet - Cab Aggregator Application
+    Copyright (C) $YEAR Aadi Manchekar
+
+    For any modifications or feedback, please reach out to aadimanchekar2002@gmail.com
+    or visit https://github.com/AadiManchekar
+
+    This program is free software: you can redistribute it and/or modify  
+    it under the terms of the GNU General Public v3.0
+
+    This program is distributed in the hope that it will be useful,  
+    but WITHOUT ANY WARRANTY; without even the implied warranty of  
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the  
+    GNU General Public License v3.0 for more details.  
+*/</content>
+                        </licenseHeader>
+                    </java>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>apply</goal>
+                        </goals>
+                        <phase>validate</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
