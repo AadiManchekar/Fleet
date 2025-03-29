@@ -69,7 +69,10 @@ Developing Fleet has been a rewarding experience, offering numerous insights and
 
 ----
 
-## Contributring
+## Contributing
+- Direct pushes to the `main` branch are protected and not allowed. All changes must go through a pull request.
+- Once a pull request is merged, the corresponding branch will be deleted to keep the repository clean.
+
 Contributions are welcome! Please follow these steps:
 1. Fork the repository.
 2. Create a new branch for your feature or bug fix.
