@@ -9,16 +9,20 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.4.4</version>
         <relativePath />
-        <!-- lookup parent from repository -->
     </parent>
     <groupId>com.aadi</groupId>
     <artifactId>fleet</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <packaging>pom</packaging>
     <name>fleet</name>
     <description>Demo project for Spring Boot</description>
     <licenses>
-        <license />
+        <license>
+            <name>GNU General Public License v3.0</name>
+            <url>https://www.gnu.org/licenses/gpl-3.0.en.html</url>
+            <distribution>repo</distribution>
+            <comments>Fleet - Cab Aggregator Application is licensed under the GNU GPL v3.0</comments>
+        </license>
     </licenses>
     <developers>
         <developer>
