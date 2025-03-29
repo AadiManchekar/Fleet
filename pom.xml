@@ -40,10 +40,11 @@
         </developer>
     </developers>
     <properties>
-        <jackson.databind>2.18.3</jackson.databind>
+        <google-java-format>1.26.0</google-java-format>
+        <jackson-databind>2.18.3</jackson-databind>
         <java.version>17</java.version>
-        <spotless.plugin>2.44.3</spotless.plugin>
-        <springdoc.openapi.webmvc>2.8.5</springdoc.openapi.webmvc>
+        <spotless-maven-plugin>2.44.3</spotless-maven-plugin>
+        <springdoc-openapi-starter-webmvc-ui>2.8.6</springdoc-openapi-starter-webmvc-ui>
     </properties>
     <dependencies>
         <dependency>
@@ -58,7 +59,7 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>${springdoc.openapi.webmvc}</version>
+            <version>${springdoc-openapi-starter-webmvc-ui}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -71,7 +72,7 @@
             <plugin>
                 <groupId>com.diffplug.spotless</groupId>
                 <artifactId>spotless-maven-plugin</artifactId>
-                <version>${spotless.plugin}</version>
+                <version>${spotless-maven-plugin}</version>
                 <configuration>
                     <pom>
                         <includes>
@@ -121,7 +122,7 @@
                             <include>*.json</include>
                         </includes>
                         <jackson>
-                            <version>${jackson.databind}</version>
+                            <version>${jackson-databind}</version>
                             <features>
                                 <INDENT_OUTPUT>true</INDENT_OUTPUT>
                                 <ORDER_MAP_ENTRIES_BY_KEYS>true</ORDER_MAP_ENTRIES_BY_KEYS>
@@ -138,7 +139,7 @@
                             <include>*.yaml</include>
                         </includes>
                         <jackson>
-                            <version>${jackson.databind}</version>
+                            <version>${jackson-databind}</version>
                             <features>
                                 <INDENT_OUTPUT>true</INDENT_OUTPUT>
                                 <ORDER_MAP_ENTRIES_BY_KEYS>false</ORDER_MAP_ENTRIES_BY_KEYS>
@@ -154,25 +155,17 @@
                             <include>*.java</include>
                             <include>**/*.java</include>
                         </includes>
+                        <googleJavaFormat>
+                            <version>${google-java-format}</version>
+                            <style>AOSP</style>
+                            <formatJavadoc>true</formatJavadoc>
+                            <reflowLongStrings>true</reflowLongStrings>
+                        </googleJavaFormat>
                         <removeUnusedImports />
                         <formatAnnotations />
                         <importOrder />
                         <licenseHeader>
-                            <content>/*
-    Fleet - Cab Aggregator Application
-    Copyright (C) $YEAR Aadi Manchekar
-
-    For any modifications or feedback, please reach out to aadimanchekar2002@gmail.com
-    or visit https://github.com/AadiManchekar
-
-    This program is free software: you can redistribute it and/or modify  
-    it under the terms of the GNU General Public v3.0
-
-    This program is distributed in the hope that it will be useful,  
-    but WITHOUT ANY WARRANTY; without even the implied warranty of  
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the  
-    GNU General Public License v3.0 for more details.  
-*/</content>
+                            <file>${project.basedir}/license-header</file>
                         </licenseHeader>
                     </java>
                 </configuration>
