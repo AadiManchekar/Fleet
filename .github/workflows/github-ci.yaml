@@ -1,0 +1,35 @@
+---
+name: Fleet CI
+"on":
+  push:
+    branches:
+    - main
+  pull_request:
+    branches:
+    - main
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+      actions: write
+      packages: write
+    strategy:
+      matrix:
+        java-version:
+        - 17
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: 17
+        distribution: temurin
+        cache: maven
+    - name: Resolve Maven Dependencies and Plugins
+      run: mvn dependency:resolve dependency:resolve-plugins
+    - name: Check formatting with Spotless
+      run: mvn spotless:check
+    - name: Build and package project
+      run: mvn clean package
