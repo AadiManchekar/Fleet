@@ -53,6 +53,11 @@ Building Fleet came with its own set of challenges, which provided valuable lear
 ## Learnings Along the Way
 Developing Fleet has been a rewarding experience, offering numerous insights and learnings:
 
+1. **Formatting** was a big challenge and wanted to maintain consitent formatting, found **spotless maven plugin** that solves most of the things and we can specify formatting for even various types of lang
+    - links referred:
+        - https://www.baeldung.com/java-maven-spotless-plugin
+        - https://github.com/diffplug/spotless/blob/main/plugin-maven/README.md
+
 
 ----
 
