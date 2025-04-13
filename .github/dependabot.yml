@@ -8,7 +8,8 @@ updates:
       - dependency-name: "org.projectlombok:lombok"
       - dependency-name: "com.diffplug.spotless:spotless-maven-plugin"
     groups: # Group so it can create a single PR for all dependencies
-      all-dependencies:
+      security-updates: # Group name for security updates
+        applies-to: security-updates
         patterns:
           - "*"
     assignees:
