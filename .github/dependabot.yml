@@ -1,0 +1,15 @@
+version: 2
+updates:
+  - package-ecosystem: "maven"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    ignore: # Ignore some dependencies that are only used for development
+      - dependency-name: "org.projectlombok:lombok"
+      - dependency-name: "com.diffplug.spotless:spotless-maven-plugin"
+    groups: # Group so it can create a single PR for all dependencies
+      all-dependencies:
+        patterns:
+          - "*"
+    assignees:
+      - "AadiManchekar"
