@@ -1,5 +1,5 @@
 # Fleet
-Fleet is my attempt at building a functional and scalable cab aggregator application while honing my problem-solving and decision-making skills. Every technical and architectural choice comes with trade-offs, and I aim to document each one, providing insights into the challenges and solutions involved in building such a platform.
+Fleet is my attempt at building a functional and scalable cab aggregator application while honing my problem-solving and decision-making abilities. Every technical and architectural choice comes with trade-offs, and I aim to document each one, providing insights into the challenges and solutions involved in building such a platform. This project is a continuous work in progress, evolving as I acquire new knowledge and skills.
 
 
 ## Why Fleet Uses GPL 3.0
