@@ -31,5 +31,5 @@ jobs:
       run: mvn dependency:resolve dependency:resolve-plugins
     - name: Check formatting with Spotless
       run: mvn spotless:check
-    - name: Build and package project
-      run: mvn clean package
+    - name: mvn clean install
+      run: mvn clean install
