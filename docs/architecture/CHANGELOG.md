@@ -7,4 +7,4 @@
 
 ## v1
 - Initial version of the HLD diagram and source file.
-- Basic architecture representation based on the initial whiteboard design.
+- Basic architecture representation based on the initial whiteboard design (HLD-v1).
