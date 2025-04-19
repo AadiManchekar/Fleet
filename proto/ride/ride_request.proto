@@ -11,6 +11,6 @@ option java_package = "com.fleet.protobuf";
 // Message representing a ride request
 message RideRequest {
   string customerId = 1; // ID of the customer requesting the ride
-        Location pickupLocation = 2; // Pickup location of the customer
+  Location pickupLocation = 2; // Pickup location of the customer
   Location dropoffLocation = 3; // Dropoff location of the customer
 }

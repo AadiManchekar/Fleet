@@ -19,17 +19,17 @@ Fleet must provide the following core functionalities to ensure a seamless user 
 
 ### Non-Functional Requirements
 To ensure the system is robust, scalable, and maintainable, the following non-functional requirements must be met:
-- **High Performance**: 
+- **High Performance**:
   - Low response time for API calls.
   - Low latency for real-time updates.
   - High throughput to handle multiple concurrent requests.
-- **Scalability**: 
+- **Scalability**:
   - Support horizontal scaling to handle increased traffic.
   - Database design must support partitioning and sharding for efficient data management.
-- **Maintainability**: 
+- **Maintainability**:
   - Follow modular design principles for easier updates and debugging.
   - Ensure clean architecture and clean code practices.
-- **Monitoring and Logging**: 
+- **Monitoring and Logging**:
   - Log all critical events for debugging.
   - Use tools like OpenTelemetry for real-time monitoring and observability.
 
@@ -61,7 +61,7 @@ Developing Fleet has been a rewarding experience, offering numerous insights and
 
 ----
 
-## Installation 
+## Installation
 
 ### Prerequisites
 - Java (v17)
