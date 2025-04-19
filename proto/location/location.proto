@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package fleet;
+
+option java_multiple_files = true;
+option java_outer_classname = "LocationProto";
+option java_package = "com.fleet.protobuf";
+
+// Message representing a location with latitude and longitude
+message Location {
+  string latitude = 1; // Latitude of the location
+  string longitude = 2; // Longitude of the location
+}

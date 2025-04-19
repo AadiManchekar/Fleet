@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package fleet;
+
+import "location/location.proto";
+
+option java_multiple_files = true;
+option java_outer_classname = "RideRequestProto";
+option java_package = "com.fleet.protobuf";
+
+// Message representing a ride request
+message RideRequest {
+  string customerId = 1; // ID of the customer requesting the ride
+        Location pickupLocation = 2; // Pickup location of the customer
+  Location dropoffLocation = 3; // Dropoff location of the customer
+}
