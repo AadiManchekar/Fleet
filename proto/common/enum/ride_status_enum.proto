@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package fleet.proto.common.enum;
+
+option java_multiple_files = true;
+option java_outer_classname = "RideStatusEnumProto";
+option java_package = "com.fleet.protobuf.common.enum";
+
+// Status of a ride
+enum RideStatus {
+  RIDE_STATUS_UNSPECIFIED = 0; // Default unspecified value
+  RIDE_STATUS_PENDING = 1; // Ride is requested, but not yet accepted
+  RIDE_STATUS_ACCEPTED = 2; // A driver has accepted the ride
+  RIDE_STATUS_STARTED = 3; // Customer has been picked up
+  RIDE_STATUS_COMPLETED = 4; // Ride is finished, Customer has been dropped off
+  RIDE_STATUS_CANCELLED = 5; // Ride was cancelled
+}
