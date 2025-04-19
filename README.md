@@ -57,7 +57,14 @@ Developing Fleet has been a rewarding experience, offering numerous insights and
     - links referred:
         - https://www.baeldung.com/java-maven-spotless-plugin
         - https://github.com/diffplug/spotless/blob/main/plugin-maven/README.md
+2. **Formatting Protobuf Files with Spotless** was challenging as it required the `buf` CLI to be installed and its path to be provided. The main issue arose when running this setup in a cross-platform environment, as Maven does not support conditional logic like `if-else` clauses. One workaround would be Maven profiles, but its unnecessary complexity. Instead, I chose to use **pre-commit hooks**, which offered several advantages:
+  - Ability to format Protobuf files.
+  - Additional features like secret detection, syntax correction, and validation for YAML and JSON files.
 
+  - Links referred:
+    - https://github.com/diffplug/spotless/blob/main/plugin-maven/README.md#protobuf
+    - https://pre-commit.com/#usage
+    - https://pre-commit.com/#plugins
 
 ----
 
@@ -110,6 +117,14 @@ Follow these steps to ensure pre-commit hooks are installed and executed correct
   python3 -m pre_commit run --all
   ```
 
+4. **Auto update Pre-Commit Hooks**:
+```bash
+pre-commit autoupdate
+```
+or
+```bash
+python3 -m pre_commit autoupdate
+```
 
 ----
 
