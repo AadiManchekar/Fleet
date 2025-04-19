@@ -23,4 +23,6 @@ repos:
   rev: v1.52.1
   hooks:
   - id: buf-format
-    args: [proto, -w]
+    args:
+    - proto
+    - -w
