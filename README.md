@@ -68,9 +68,48 @@ Developing Fleet has been a rewarding experience, offering numerous insights and
 - Apache Maven (v3.9.9 or higher)
 - Docker (v27.3.1 or higher)
 - Docker compose (v2.30.3-desktop.1 since im using windows)
+- Python (v3.8.10)
+### Steps to Build the Application
+To build the Fleet application, execute the following command:
+```bash
+# Clean and build the application
+mvn clean install
+```
 
+### Steps to Run Pre-Commit Hooks
+Follow these steps to ensure pre-commit hooks are installed and executed correctly:
 
-### Steps to Run the Application
+1. **If Pre-Commit is Already Installed**:
+  Run the following commands:
+  ```bash
+  pre-commit install
+  pre-commit run --all
+  ```
+
+2. **If Pre-Commit is Not Installed**:
+  Ensure you are using Python 3.8.10 (newer Python and pre-commit versions may have compatibility issues). Then, execute:
+  ```bash
+  pip install -r requirements.txt
+  pre-commit install
+  pre-commit run --all
+  ```
+
+3. **If Using Windows and Pre-Commit Command is Not Found**:
+  Verify your Python version by running:
+  ```bash
+  python3 --version
+  ```
+  Ensure the output is:
+  ```
+  Python 3.8.10
+  ```
+
+  Then, use the following commands to install and run pre-commit hooks:
+  ```bash
+  python3 -m pre_commit install
+  python3 -m pre_commit run --all
+  ```
+
 
 ----
 
