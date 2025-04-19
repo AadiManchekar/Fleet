@@ -19,17 +19,17 @@ Fleet must provide the following core functionalities to ensure a seamless user 
 
 ### Non-Functional Requirements
 To ensure the system is robust, scalable, and maintainable, the following non-functional requirements must be met:
-- **High Performance**: 
+- **High Performance**:
   - Low response time for API calls.
   - Low latency for real-time updates.
   - High throughput to handle multiple concurrent requests.
-- **Scalability**: 
+- **Scalability**:
   - Support horizontal scaling to handle increased traffic.
   - Database design must support partitioning and sharding for efficient data management.
-- **Maintainability**: 
+- **Maintainability**:
   - Follow modular design principles for easier updates and debugging.
   - Ensure clean architecture and clean code practices.
-- **Monitoring and Logging**: 
+- **Monitoring and Logging**:
   - Log all critical events for debugging.
   - Use tools like OpenTelemetry for real-time monitoring and observability.
 
@@ -57,20 +57,74 @@ Developing Fleet has been a rewarding experience, offering numerous insights and
     - links referred:
         - https://www.baeldung.com/java-maven-spotless-plugin
         - https://github.com/diffplug/spotless/blob/main/plugin-maven/README.md
+2. **Formatting Protobuf Files with Spotless** was challenging as it required the `buf` CLI to be installed and its path to be provided. The main issue arose when running this setup in a cross-platform environment, as Maven does not support conditional logic like `if-else` clauses. One workaround would be Maven profiles, but its unnecessary complexity. Instead, I chose to use **pre-commit hooks**, which offered several advantages:
+  - Ability to format Protobuf files.
+  - Additional features like secret detection, syntax correction, and validation for YAML and JSON files.
 
+  - Links referred:
+    - https://github.com/diffplug/spotless/blob/main/plugin-maven/README.md#protobuf
+    - https://pre-commit.com/#usage
+    - https://pre-commit.com/#plugins
 
 ----
 
-## Installation 
+## Installation
 
 ### Prerequisites
 - Java (v17)
 - Apache Maven (v3.9.9 or higher)
 - Docker (v27.3.1 or higher)
 - Docker compose (v2.30.3-desktop.1 since im using windows)
+- Python (v3.8.10)
+### Steps to Build the Application
+To build the Fleet application, execute the following command:
+```bash
+# Clean and build the application
+mvn clean install
+```
 
+### Steps to Run Pre-Commit Hooks
+Follow these steps to ensure pre-commit hooks are installed and executed correctly:
 
-### Steps to Run the Application
+1. **If Pre-Commit is Already Installed**:
+  Run the following commands:
+  ```bash
+  pre-commit install
+  pre-commit run --all
+  ```
+
+2. **If Pre-Commit is Not Installed**:
+  Ensure you are using Python 3.8.10 (newer Python and pre-commit versions may have compatibility issues). Then, execute:
+  ```bash
+  pip install -r requirements.txt
+  pre-commit install
+  pre-commit run --all
+  ```
+
+3. **If Using Windows and Pre-Commit Command is Not Found**:
+  Verify your Python version by running:
+  ```bash
+  python3 --version
+  ```
+  Ensure the output is:
+  ```
+  Python 3.8.10
+  ```
+
+  Then, use the following commands to install and run pre-commit hooks:
+  ```bash
+  python3 -m pre_commit install
+  python3 -m pre_commit run --all
+  ```
+
+4. **Auto update Pre-Commit Hooks**:
+```bash
+pre-commit autoupdate
+```
+or
+```bash
+python3 -m pre_commit autoupdate
+```
 
 ----
 
