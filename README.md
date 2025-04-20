@@ -98,6 +98,8 @@ To ensure the system is robust, scalable, and maintainable, the following non-fu
 
 ![Fleet Clean Code Architecture](docs/architecture/v3/images/Clean-Code-Architecture.png)
 
+*Figure: Clean Code Architecture for Fleet*
+
 ### Microservice Design Decisions
 This section outlines the key decisions made for each microservice in the Fleet application:
 
@@ -129,6 +131,7 @@ Fleet heavily relies on real-time updates and scale-out capabilities, making eve
 **Final Decision:**
 EKS provides a fully managed Kubernetes environment with enterprise-level scalability, making it ideal for our microservices.
 
+
 <del>
 
 #### 3. Why Customer-Facing Load Balancer is ALB, Not NLB?
@@ -145,7 +148,8 @@ ALB is used for customer-facing traffic as it supports TLS termination and HTTP-
 
 </del>
 
-**Customer-Facing Load Balancer is NLB, as AWS NLB supports TLS termination**
+**-> Customer-Facing Load Balancer is now NLB, as AWS NLB supports TLS termination**
+
 
 <del>
 
@@ -162,7 +166,8 @@ ALB handles TLS termination to simplify infrastructure and offload certificate m
 
 </del>
 
-**Reduced sope of the project. Hence, API Gateway is removed**
+**-> Reduced sope of the project. Hence, API Gateway is removed**
+
 
 <del>
 
@@ -179,11 +184,11 @@ API Gateway provides flexibility and scalability, making it essential for managi
 
 </del>
 
-**Reduced sope of the project. Hence, API Gateway is removed**
+**-> Reduced sope of the project. Hence, API Gateway is removed**
+
 
 #### 6. Why Aggregator Service?
 **Pros:**
-- Decouples API Gateway from backend services.
 - A single API call is required instead of calling individual microservices.
 - Handles failures.
 
@@ -193,6 +198,7 @@ API Gateway provides flexibility and scalability, making it essential for managi
 **Final Decision:**
 Aggregator service enables a more maintainable, modular architecture and helps to handle failures if a microservice fails to respond.
 
+
 #### 7. Why API Gateway, Aggregator, and Ride Booking Service Use gRPC Instead of Kafka?
 **Pros**
 - Low-latency, high-performance communication.
@@ -200,9 +206,9 @@ Aggregator service enables a more maintainable, modular architecture and helps t
 
 **Cons**
 
-
 **Final Decision:**
 gRPC is used for request-response flows, while Kafka is used for event-driven processes.
+
 
 #### 8. Why Redis for Storing Frequent Driver Locations?
 **Pros:**
@@ -211,9 +217,9 @@ gRPC is used for request-response flows, while Kafka is used for event-driven pr
 
 **Cons:**
 
-
 **Final Decision:**
 Redis is ideal for frequently changing data like driver locations due to its speed and efficiency.
+
 
 #### 9. Why PostgreSQL for Customer, Driver, and Ride Details?
 **Pros:**
@@ -227,6 +233,7 @@ Redis is ideal for frequently changing data like driver locations due to its spe
 **Final Decision:**
 PostgreSQL provides strong consistency and is ideal for transactional ride data.
 
+
 #### 10. Why We Ditch WebSockets and Use gRPC + QUIC?
 **Pros of gRPC + QUIC:**
 - gRPC (ride accept/decline) ensures low-latency bidirectional communication. TCP based so gurantees message delivery.
@@ -239,6 +246,7 @@ PostgreSQL provides strong consistency and is ideal for transactional ride data.
 **Final Decision:**
 gRPC + QUIC provides the best combination of efficiency and performance for real-time communication.
 
+
 #### 11. Why NLB for Driver Connections Instead of ALB?
 **Pros of NLB:**
 - Lower latency, better suited for persistent connections.
@@ -250,11 +258,11 @@ gRPC + QUIC provides the best combination of efficiency and performance for real
 **Final Decision:**
 NLB is used for driver connections to ensure low-latency, persistent communication channels.
 
+
 #### 12. Why Customer Communication Service Uses gRPC 
 **Pros of gRPC for Bidirectional Communication:**
 - Enables low-latency, high-performance, bidirectional streaming ideal for real-time customer interactions.
 - Provides efficient and reliable message exchange between clients and the service.
-
 
 **Final Decision:**
 Using gRPC for bidirectional communication ensures robust, real-time, fast & reliable communication
