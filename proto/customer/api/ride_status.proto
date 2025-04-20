@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package fleet.proto.customer.api;
 
-import "common/ride_status_enum.proto";
+import "common/enum/ride_status_enum.proto";
 
 option java_multiple_files = true;
 option java_outer_classname = "RideStatusUpdateProto";
@@ -11,5 +11,5 @@ option java_package = "com.fleet.protobuf.customer.api";
 // Status update of a ride for a customer
 message RideStatusUpdate {
   string ride_id = 1; // Unique identifier for the ride
-  RideStatus status = 2; // Current ride status
+  fleet.proto.common.RideStatus status = 2; // Current ride status
 }

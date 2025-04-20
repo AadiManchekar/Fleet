@@ -11,5 +11,5 @@ option java_package = "com.fleet.protobuf.driver.api";
 // Periodic sent message by the driver to update their current location
 message DriverLocation {
   string driver_id = 1; // Unique identifier for the driver
-  Location location = 2; // Driver’s current location
+  fleet.proto.common.Location location = 2; // Driver’s current location
 }

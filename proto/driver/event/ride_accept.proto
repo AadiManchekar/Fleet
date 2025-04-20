@@ -10,5 +10,5 @@ option java_package = "com.fleet.protobuf.driver.event";
 
 // Event indicating that a driver has accepted a ride
 message RideAcceptEvent {
-  RideAccept ride_accept = 1; // Ride acceptance details
+  fleet.proto.driver.api.RideAccept ride_accept = 1; // Ride acceptance details
 }

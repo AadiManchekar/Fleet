@@ -1,10 +1,10 @@
 syntax = "proto3";
 
-package fleet.proto.common.enum;
+package fleet.proto.common;
 
 option java_multiple_files = true;
 option java_outer_classname = "RideStatusEnumProto";
-option java_package = "com.fleet.protobuf.common.enum";
+option java_package = "com.fleet.protobuf.common";
 
 // Status of a ride
 enum RideStatus {

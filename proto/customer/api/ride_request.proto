@@ -11,6 +11,6 @@ option java_package = "com.fleet.protobuf.customer.api";
 // Message sent by a customer to request a ride
 message RideRequest {
   string customer_id = 1; // Unique identifier for the customer
-  Location source = 2; // Pickup location
-  Location destination = 3; // Drop-off location
+  fleet.proto.common.Location source = 2; // Pickup location
+  fleet.proto.common.Location destination = 3; // Drop-off location
 }
