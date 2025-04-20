@@ -12,7 +12,6 @@ Fleet is licensed under GPL 3.0 to promote open collaboration and ensure that an
 Fleet must provide the following core functionalities to ensure a seamless user experience:
 - **Real-Time Driver Location Tracking**: Continuously track and update driver locations.
 - **Ride Booking**: Allow users to book rides, view ride details and ride status.
-- **Ride Allocation System**: Implement a system to allocate rides efficiently.
 
 
 ### Non-Functional Requirements
@@ -36,21 +35,21 @@ To ensure the system is robust, scalable, and maintainable, the following non-fu
 
 ### Microservices
 
-#### 1. API Gateway
-**Purpose:** Acts as an entry point for customer requests, handling protocol translation, rate limiting.
+#### 1. Customer Communication Service
+**Purpose:** Facilitates real-time, bi-directional communication by maintaining persistent connections with customers.
 **Techstack:** Spring Boot, gRPC
 **Infra:** None
 **Key Decisions:**
-- Enables future enhancements like authentication, caching, and rate limiting, protocol translation without modifying backend services.
-- Uses gRPC instead of REST to communicate with `ride-aggregator-service` for better performance.
+- Chose gRPC over REST to boost performance.  
+- Enables bi-directional streaming for efficient, real-time data exchange.
 
 #### 2. Ride Aggregator Service
-**Purpose:** Acts as an aggregator service, `API Gateway` will call ride-aggregator-service which inturns coordinates with other microservices to fullfill the request.
+**Purpose:** Acts as an aggregator service, `Customer Communication Service` will call `ride-aggregator-service` which inturns coordinates with other microservices to fullfill the request.
 **Techstack:** Spring Boot, gRPC
 **Infra:** Kafka
 **Key Decisions:**
-- Uses Kafka for asynchronous processing except for interactions with `ride-booking-service` which require gRPC for immediate updates.
-- Allows separation of concerns by abstracting business logic from API Gateway.
+- Utilizes Kafka for asynchronous processing, except when interacting with the `ride-booking-service` where immediate database updates via gRPC are essential.  
+- Simplifies the client-side by consolidating multiple service calls into a single API endpoint.
 
 #### 3. Ride Booking Service
 **Purpose:** Manages ride status updates and maintains persistent ride data.
@@ -90,9 +89,14 @@ To ensure the system is robust, scalable, and maintainable, the following non-fu
 
 ### High-Level Design (HLD)
 
-![Fleet HLD v2](docs/architecture/v2/images/HLD.png)
+![Fleet HLD v3](docs/architecture/v3/images/HLD.png)
 
 *Figure: High-Level Design for Fleet*
+
+
+### Clean Code Architecture
+
+![Fleet Clean Code Architecture](docs/architecture/v3/images/Clean-Code-Architecture.png)
 
 ### Microservice Design Decisions
 This section outlines the key decisions made for each microservice in the Fleet application:
@@ -125,6 +129,7 @@ Fleet heavily relies on real-time updates and scale-out capabilities, making eve
 **Final Decision:**
 EKS provides a fully managed Kubernetes environment with enterprise-level scalability, making it ideal for our microservices.
 
+<del>
 
 #### 3. Why Customer-Facing Load Balancer is ALB, Not NLB?
 **Pros of ALB:**
@@ -138,6 +143,12 @@ EKS provides a fully managed Kubernetes environment with enterprise-level scalab
 **Final Decision:**
 ALB is used for customer-facing traffic as it supports TLS termination and HTTP-based routing efficiently.
 
+</del>
+
+**Customer-Facing Load Balancer is NLB, as AWS NLB supports TLS termination**
+
+<del>
+
 #### 4. TLS Termination at ALB (Not API Gateway)?
 **Pros of ALB TLS Termination:**
 - Offloads TLS management, reducing API Gateway load.
@@ -149,6 +160,12 @@ ALB is used for customer-facing traffic as it supports TLS termination and HTTP-
 **Final Decision:**
 ALB handles TLS termination to simplify infrastructure and offload certificate management from the backend.
 
+</del>
+
+**Reduced sope of the project. Hence, API Gateway is removed**
+
+<del>
+
 #### 5. Why API Gateway?
 **Pros:**
 - Future-proofing for authentication, rate limiting, and caching.
@@ -159,6 +176,10 @@ ALB handles TLS termination to simplify infrastructure and offload certificate m
 
 **Final Decision:**
 API Gateway provides flexibility and scalability, making it essential for managing client-facing requests.
+
+</del>
+
+**Reduced sope of the project. Hence, API Gateway is removed**
 
 #### 6. Why Aggregator Service?
 **Pros:**
@@ -228,6 +249,15 @@ gRPC + QUIC provides the best combination of efficiency and performance for real
 
 **Final Decision:**
 NLB is used for driver connections to ensure low-latency, persistent communication channels.
+
+#### 12. Why Customer Communication Service Uses gRPC 
+**Pros of gRPC for Bidirectional Communication:**
+- Enables low-latency, high-performance, bidirectional streaming ideal for real-time customer interactions.
+- Provides efficient and reliable message exchange between clients and the service.
+
+
+**Final Decision:**
+Using gRPC for bidirectional communication ensures robust, real-time, fast & reliable communication
 
 
 ## Challenges Faced
