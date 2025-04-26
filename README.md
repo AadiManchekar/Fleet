@@ -36,7 +36,7 @@ To ensure the system is robust, scalable, and maintainable, the following non-fu
 ### Microservices
 
 #### 1. Customer Communication Service
-**Purpose:** Facilitates real-time, bi-directional communication by maintaining persistent connections with customers.
+**Purpose:** Facilitates real-time, bi-directional communication by maintaining connections with customers.
 **Techstack:** Spring Boot, gRPC  
 **Infra:** None  
 **Key Decisions:**
@@ -56,17 +56,17 @@ To ensure the system is robust, scalable, and maintainable, the following non-fu
 **Techstack:** Spring Boot, gRPC  
 **Infra:** PostgreSQL  
 **Key Decisions:**
-- Uses PostgreSQL to persist ride details
+- Utilizes PostgreSQL to persist ride details
 
 #### 4. Driver Matching Service
 **Purpose:** Fetches the 10 closest drivers for a ride request.  
 **Techstack:** Spring Boot  
 **Infra:** Redis  
 **Key Decisions:**
-- Uses Redis for quick access to driver locations.
+- Utilizes Redis for quick access to driver locations.
 
 #### 5. Driver Connection Service
-**Purpose:** Maintains active connections with drivers and facilitates real-time communication.  
+**Purpose:** Maintains connections with drivers and facilitates real-time communication.  
 **Techstack:** gRPC, QUIC  
 **Infra:** Kafka  
 **Key Decisions:**
@@ -79,8 +79,8 @@ To ensure the system is robust, scalable, and maintainable, the following non-fu
 **Techstack:** Spring Boot, Kafka, Redis  
 **Infra:** Redis, Kafka  
 **Key Decisions:**
-- Uses Kafka for scalable ingestion of location updates.
-- Uses Redis to store frequently changing location data efficiently.
+- Utilizes Kafka for scalable ingestion of location updates.
+- Utilizes Redis to store frequently changing location data efficiently.
 
 
 ### Infrastructure Components
@@ -91,14 +91,14 @@ To ensure the system is robust, scalable, and maintainable, the following non-fu
 
 ![Fleet HLD v3](docs/architecture/v3/images/HLD.png)
 
-*Figure: High-Level Design for Fleet*
+*Figure 1: High-Level Design for Fleet*
 
 
 ### Clean Code Architecture
 
 ![Fleet Clean Code Architecture](docs/architecture/v3/images/Clean-Code-Architecture.png)
 
-*Figure: Clean Code Architecture for Fleet*
+*Figure 2: Clean Code Architecture for Fleet*
 
 ### Microservice Design Decisions
 This section outlines the key decisions made for each microservice in the Fleet application:
@@ -112,7 +112,6 @@ This section outlines the key decisions made for each microservice in the Fleet 
 
 **Cons:**
 - Operational complexity.
-- Eventual consistency issues in some scenarios.
 
 **Final Decision:**
 Fleet heavily relies on real-time updates and scale-out capabilities, making event-driven architecture the optimal choice.
@@ -199,6 +198,8 @@ API Gateway provides flexibility and scalability, making it essential for managi
 Aggregator service enables a more maintainable, modular architecture and helps to handle failures if a microservice fails to respond.
 
 
+<del>
+
 #### 7. Why API Gateway, Aggregator, and Ride Booking Service Use gRPC Instead of Kafka?
 **Pros**
 - Low-latency, high-performance communication.
@@ -208,6 +209,10 @@ Aggregator service enables a more maintainable, modular architecture and helps t
 
 **Final Decision:**
 gRPC is used for request-response flows, while Kafka is used for event-driven processes.
+
+</del>
+
+**-> Reduced sope of the project. Hence, API Gateway is removed. Driver communication service uses gRPC to co-ordinate with Aggregator service due to Low-latency, high-performance,  Synchronous request-response handling needs.**
 
 
 #### 8. Why Redis for Storing Frequent Driver Locations?
@@ -228,10 +233,11 @@ Redis is ideal for frequently changing data like driver locations due to its spe
 - Supports complex queries efficiently.
 
 **Cons:**
-- Higher latency compared to NoSQL databases.
+- Requires careful schema design and indexing to maintain performance at scale.
+- Less flexible for handling unstructured or rapidly evolving data models.
 
 **Final Decision:**
-PostgreSQL provides strong consistency and is ideal for transactional ride data.
+PostgreSQL offers full ACID compliance, robust community support, and is one of the most reliable and well-established relational databases available.
 
 
 #### 10. Why We Ditch WebSockets and Use gRPC + QUIC?
@@ -251,6 +257,7 @@ gRPC + QUIC provides the best combination of efficiency and performance for real
 **Pros of NLB:**
 - Lower latency, better suited for persistent connections.
 - Supports both TCP and UDP (required for gRPC and QUIC).
+- Supports TLS termination.
 
 **Cons of ALB:**
 - Poor support for long-lived connections.
@@ -286,6 +293,10 @@ Developing Fleet has been a rewarding experience, offering numerous insights and
     - [gRPC Official Documentation](https://grpc.io/docs/)
     - [Protocol Buffers Documentation](https://protobuf.dev/)
 
+3. **QUIC** was selected for its modern, low-latency, and reliable transport protocol, especially suited for real-time streaming and mobile networks. QUIC operates over UDP, providing faster connection establishment, improved congestion control, and better performance in lossy network conditions compared to traditional TCP. This choice significantly enhanced the system's ability to deliver real-time data with minimal delay, even on unreliable networks.
+  - Links referred:
+    - [The QUIC Transport Protocol: Design and Internet-Scale Deployment (Google Research)](https://research.google/pubs/the-quic-transport-protocol-design-and-internet-scale-deployment/)
+    - [Cloudflare Blog: The Road to QUIC](https://blog.cloudflare.com/the-road-to-quic/)
 
 
 ## Installation 
