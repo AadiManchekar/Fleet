@@ -37,47 +37,47 @@ To ensure the system is robust, scalable, and maintainable, the following non-fu
 
 #### 1. Customer Communication Service
 **Purpose:** Facilitates real-time, bi-directional communication by maintaining persistent connections with customers.
-**Techstack:** Spring Boot, gRPC
-**Infra:** None
+**Techstack:** Spring Boot, gRPC  
+**Infra:** None  
 **Key Decisions:**
 - Chose gRPC over REST to boost performance.  
 - Enables bi-directional streaming for efficient, real-time data exchange.
 
 #### 2. Ride Aggregator Service
-**Purpose:** Acts as an aggregator service, `Customer Communication Service` will call `ride-aggregator-service` which inturns coordinates with other microservices to fullfill the request.
-**Techstack:** Spring Boot, gRPC
-**Infra:** Kafka
+**Purpose:** Acts as an aggregator service, `Customer Communication Service` will call `ride-aggregator-service` which inturns coordinates with other microservices to fullfill the request.  
+**Techstack:** Spring Boot, gRPC  
+**Infra:** Kafka  
 **Key Decisions:**
 - Utilizes Kafka for asynchronous processing, except when interacting with the `ride-booking-service` where immediate database updates via gRPC are essential.  
 - Simplifies the client-side by consolidating multiple service calls into a single API endpoint.
 
 #### 3. Ride Booking Service
-**Purpose:** Manages ride status updates and maintains persistent ride data.
-**Techstack:** Spring Boot, gRPC
-**Infra:** PostgreSQL
+**Purpose:** Manages ride status updates and maintains persistent ride data.  
+**Techstack:** Spring Boot, gRPC  
+**Infra:** PostgreSQL  
 **Key Decisions:**
 - Uses PostgreSQL to persist ride details
 
 #### 4. Driver Matching Service
-**Purpose:** Fetches the 10 closest drivers for a ride request.
-**Techstack:** Spring Boot
-**Infra:** Redis
+**Purpose:** Fetches the 10 closest drivers for a ride request.  
+**Techstack:** Spring Boot  
+**Infra:** Redis  
 **Key Decisions:**
 - Uses Redis for quick access to driver locations.
 
 #### 5. Driver Connection Service
-**Purpose:** Maintains active connections with drivers and facilitates real-time communication.
-**Techstack:** gRPC, QUIC
-**Infra:** Kafka
+**Purpose:** Maintains active connections with drivers and facilitates real-time communication.  
+**Techstack:** gRPC, QUIC  
+**Infra:** Kafka  
 **Key Decisions:**
 - Uses NLB (Layer 4) instead of ALB for persistent low-latency connections.
 - Uses gRPC for ride acceptance/decline and QUIC for efficient location updates.
 - Offloads incoming location updates to Kafka for asynchronous processing.
 
 #### 6. Driver Location Service
-**Purpose:** Listens to driver location updates and persists them in Redis.
-**Techstack:** Spring Boot, Kafka, Redis
-**Infra:** Redis, Kafka
+**Purpose:** Listens to driver location updates and persists them in Redis.  
+**Techstack:** Spring Boot, Kafka, Redis  
+**Infra:** Redis, Kafka  
 **Key Decisions:**
 - Uses Kafka for scalable ingestion of location updates.
 - Uses Redis to store frequently changing location data efficiently.
