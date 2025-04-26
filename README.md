@@ -1,12 +1,12 @@
-# Fleet
+# Fleet 🚖
 Fleet is my attempt at building a functional and scalable cab aggregator application while honing my problem-solving and decision-making abilities. Every technical and architectural choice comes with trade-offs, and I aim to document each one, providing insights into the challenges and solutions involved in building such a platform. This project is a continuous work in progress, evolving as I acquire new knowledge and skills.
 
 
-## Why Fleet Uses GPL 3.0
+## Why Fleet Uses GPL 3.0 📜
 Fleet is licensed under GPL 3.0 to promote open collaboration and ensure that any modifications or improvements made by others remain open-source. This aligns with the project's goal of learning and sharing knowledge while fostering a community-driven development approach.
 
 
-## Requirements
+## Requirements 📝
 
 ### Functional Requirements
 Fleet must provide the following core functionalities to ensure a seamless user experience:
@@ -31,7 +31,7 @@ To ensure the system is robust, scalable, and maintainable, the following non-fu
   - Use tools like OpenTelemetry for real-time monitoring and observability.
 
 
-## Architecture
+## Architecture 🏗️
 
 ### Microservices
 
@@ -275,11 +275,11 @@ NLB is used for driver connections to ensure low-latency, persistent communicati
 Using gRPC for bidirectional communication ensures robust, real-time, fast & reliable communication
 
 
-## Challenges Faced
+## Challenges Faced 🧗
 Building Fleet came with its own set of challenges, which provided valuable learning opportunities:
 
 
-## Learnings Along the Way
+## Learnings Along the Way 📚
 Developing Fleet has been a rewarding experience, offering numerous insights and learnings:
 
 1. **Formatting** was a big challenge and wanted to maintain consistent formatting. Found **Spotless Maven Plugin** that solves most of the issues, and we can specify formatting for various types of languages.
@@ -302,7 +302,7 @@ Developing Fleet has been a rewarding experience, offering numerous insights and
   - Links referred:
     - [Fundamentals of Database Engineering](https://www.udemy.com/course/database-engines-crash-course/)
 
-## Installation 
+## Installation 🛠️
 
 ### Prerequisites
 - Java (v17)
@@ -315,7 +315,7 @@ Developing Fleet has been a rewarding experience, offering numerous insights and
 
 ----
 
-## Contributing
+## Contributing 🤝
 - Direct pushes to the `main` branch are protected and not allowed. All changes must go through a pull request.
 - Once a pull request is merged, the corresponding branch will be deleted to keep the repository clean.
 
