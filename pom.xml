@@ -211,8 +211,7 @@
                     </yaml>
                     <java>
                         <includes>
-                            <include>*.java</include>
-                            <include>**/*.java</include>
+                            <include>**/src/*</include>
                         </includes>
                         <googleJavaFormat>
                             <version>${google-java-format}</version>
@@ -224,7 +223,7 @@
                         <formatAnnotations />
                         <importOrder />
                         <licenseHeader>
-                            <file>${project.basedir}/license-header</file>
+                            <file>license-header</file>
                         </licenseHeader>
                     </java>
                 </configuration>
