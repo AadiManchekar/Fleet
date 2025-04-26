@@ -6,7 +6,9 @@ repos:
   - id: check-yaml
   - id: check-json
   - id: end-of-file-fixer
+    exclude: '\.(md|excalidraw)$'
   - id: trailing-whitespace
+    exclude: '\.(md|excalidraw)$'
   - id: check-case-conflict
   - id: check-executables-have-shebangs
   - id: detect-aws-credentials
