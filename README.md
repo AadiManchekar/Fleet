@@ -298,6 +298,9 @@ Developing Fleet has been a rewarding experience, offering numerous insights and
     - [The QUIC Transport Protocol: Design and Internet-Scale Deployment (Google Research)](https://research.google/pubs/the-quic-transport-protocol-design-and-internet-scale-deployment/)
     - [Cloudflare Blog: The Road to QUIC](https://blog.cloudflare.com/the-road-to-quic/)
 
+4. **PostgreSQL** was chosen for its robust ACID compliance, strong support for relational data, and mature ecosystem. PostgreSQL excels at handling complex queries and ensures data consistency. Its reliability and extensive community support make it a solid choice.
+  - Links referred:
+    - [Fundamentals of Database Engineering](https://www.udemy.com/course/database-engines-crash-course/)
 
 ## Installation 
 
