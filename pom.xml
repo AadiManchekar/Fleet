@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.4</version>
+        <version>3.4.5</version>
         <relativePath />
     </parent>
     <groupId>com.aadi</groupId>
@@ -30,8 +30,9 @@
             <name>Aadi Manchekar</name>
             <email>aadimanchekar2002@gmail.com</email>
             <roles>
-                <role>Cloud Backend Developer</role>
-                <role>Devops</role>
+                <role>Backend Developer</role>
+                <role>Cloud Engineer</role>
+                <role>Devops Engineer</role>
             </roles>
             <properties>
                 <url>https://github.com/AadiManchekar</url>
@@ -41,20 +42,58 @@
     </developers>
     <properties>
         <google-java-format>1.26.0</google-java-format>
+        <grpc.version>1.70.0</grpc.version>
         <jackson-databind>2.18.3</jackson-databind>
+        <jacoco-maven-plugin>0.8.13</jacoco-maven-plugin>
         <java.version>17</java.version>
+        <maven-clean-plugin>3.4.1</maven-clean-plugin>
+        <maven-resources-plugin>3.3.1</maven-resources-plugin>
+        <maven-surefire-plugin>3.5.3</maven-surefire-plugin>
+        <protobuf-java.version>3.25.6</protobuf-java.version>
         <spotless-maven-plugin>2.44.3</spotless-maven-plugin>
+        <spring-grpc.version>0.7.0</spring-grpc.version>
         <springdoc-openapi-starter-webmvc-ui>2.8.6</springdoc-openapi-starter-webmvc-ui>
     </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.grpc</groupId>
+                <artifactId>spring-grpc-dependencies</artifactId>
+                <version>${spring-grpc.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <dependencies>
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-services</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
         <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-tracing-bridge-brave</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.grpc</groupId>
+            <artifactId>spring-grpc-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
@@ -62,17 +101,49 @@
             <version>${springdoc-openapi-starter-webmvc-ui}</version>
         </dependency>
         <dependency>
+            <groupId>io.zipkin.reporter2</groupId>
+            <artifactId>zipkin-reporter-brave</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.grpc</groupId>
+            <artifactId>spring-grpc-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka-test</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.diffplug.spotless</groupId>
+                    <artifactId>spotless-maven-plugin</artifactId>
+                    <version>${spotless-maven-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${maven-resources-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>${jacoco-maven-plugin}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>com.diffplug.spotless</groupId>
                 <artifactId>spotless-maven-plugin</artifactId>
-                <version>${spotless-maven-plugin}</version>
                 <configuration>
                     <pom>
                         <includes>
@@ -152,8 +223,7 @@
                     </yaml>
                     <java>
                         <includes>
-                            <include>*.java</include>
-                            <include>**/*.java</include>
+                            <include>**/src/*</include>
                         </includes>
                         <googleJavaFormat>
                             <version>${google-java-format}</version>
@@ -165,7 +235,7 @@
                         <formatAnnotations />
                         <importOrder />
                         <licenseHeader>
-                            <file>${project.basedir}/license-header</file>
+                            <file>license-header</file>
                         </licenseHeader>
                     </java>
                 </configuration>
@@ -180,6 +250,18 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>${maven-clean-plugin}</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${project.basedir}/src/main/proto/</directory>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <annotationProcessorPaths>
@@ -189,6 +271,65 @@
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <!-- <exclude>**/target/generated-sources/protobuf/*</exclude> -->
+                    </excludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>jacoco-initialize</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>jacoco-site</id>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                    <execution>
+                        <id>check-coverage</id>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <phase>verify</phase>
+                        <configuration>
+                            <rules>
+                                <rule>
+                                    <element>BUNDLE</element>
+                                    <limits>
+                                        <limit>
+                                            <counter>INSTRUCTION</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.00</minimum>
+                                        </limit>
+                                        <limit>
+                                            <counter>BRANCH</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.00</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

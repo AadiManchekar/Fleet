@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package fleet.proto.customer.event;
+
+import "customer/api/ride_request.proto";
+
+option java_multiple_files = true;
+option java_outer_classname = "RideRequestEventProto";
+option java_package = "com.fleet.protobuf.customer.event";
+
+// Event containing ride request information
+message RideRequestEvent {
+  string ride_id = 1; // Unique identifier for the ride request
+  fleet.proto.customer.api.RideRequest ride_request = 2; // The ride request details
+}

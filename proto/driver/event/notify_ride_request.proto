@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package fleet.proto.driver.event;
+
+import "customer/event/ride_request.proto";
+
+option java_multiple_files = true;
+option java_outer_classname = "NotifyRideRequestEventProto";
+option java_package = "com.fleet.protobuf.driver.event";
+
+// Event containing ride request information along with matched driver details
+message NotifyRideRequestEvent {
+  fleet.proto.customer.event.RideRequestEvent ride_request_event = 1; // Ride request event details
+  repeated string driver_ids = 2; // Array of matched driver IDs for a ride
+}

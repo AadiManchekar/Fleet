@@ -1,10 +1,12 @@
 # Fleet 🚖
 Fleet is my attempt at building a functional and scalable cab aggregator application while honing my problem-solving and decision-making abilities. Every technical and architectural choice comes with trade-offs, and I aim to document each one, providing insights into the challenges and solutions involved in building such a platform. This project is a continuous work in progress, evolving as I acquire new knowledge and skills.
 
+---
 
 ## Why Fleet Uses GPL 3.0 📜
 Fleet is licensed under GPL 3.0 to promote open collaboration and ensure that any modifications or improvements made by others remain open-source. This aligns with the project's goal of learning and sharing knowledge while fostering a community-driven development approach.
 
+---
 
 ## Requirements 📝
 
@@ -16,20 +18,21 @@ Fleet must provide the following core functionalities to ensure a seamless user 
 
 ### Non-Functional Requirements
 To ensure the system is robust, scalable, and maintainable, the following non-functional requirements must be met:
-- **High Performance**: 
+- **High Performance**:
   - Low response time for API calls.
   - Low latency for real-time updates.
   - High throughput to handle multiple concurrent requests.
-- **Scalability**: 
+- **Scalability**:
   - Support horizontal scaling to handle increased traffic.
   - Database design must support partitioning and sharding for efficient data management.
-- **Maintainability**: 
+- **Maintainability**:
   - Follow modular design principles for easier updates and debugging.
   - Ensure clean architecture and clean code practices.
-- **Monitoring and Logging**: 
+- **Monitoring and Logging**:
   - Log all critical events for debugging.
   - Use tools like OpenTelemetry for real-time monitoring and observability.
 
+---
 
 ## Architecture 🏗️
 
@@ -274,10 +277,12 @@ NLB is used for driver connections to ensure low-latency, persistent communicati
 **Final Decision:**
 Using gRPC for bidirectional communication ensures robust, real-time, fast & reliable communication
 
+---
 
 ## Challenges Faced 🧗
 Building Fleet came with its own set of challenges, which provided valuable learning opportunities:
 
+---
 
 ## Learnings Along the Way 📚
 Developing Fleet has been a rewarding experience, offering numerous insights and learnings:
@@ -301,6 +306,29 @@ Developing Fleet has been a rewarding experience, offering numerous insights and
 4. **PostgreSQL** was chosen for its robust ACID compliance, strong support for relational data, and mature ecosystem. PostgreSQL excels at handling complex queries and ensures data consistency. Its reliability and extensive community support make it a solid choice.
   - Links referred:
     - [Fundamentals of Database Engineering](https://www.udemy.com/course/database-engines-crash-course/)
+  
+5. **Formatting Protobuf Files** Formatting protobuf files with maven-spotless plugin was challenging as it required the `buf` CLI path to be provided. The main issue arose when running this setup in a cross-platform environment, as Maven does not support conditional logic like `if-else` clauses. One workaround would be Maven profiles, but its unnecessary complexity. Instead, I chose to use **pre-commit hooks**, which offered several advantages:
+  - Ability to format Protobuf files.
+  - Additional features like secret detection, syntax correction, and validation for YAML and JSON files.
+
+  - Links referred:
+    - https://github.com/diffplug/spotless/blob/main/plugin-maven/README.md#protobuf
+    - https://pre-commit.com/#usage
+    - https://pre-commit.com/#plugins
+
+6. **Protobuf Design Best Practices**  Designing Protobuf files for Fleet involved structuring all `.proto` files under the `proto/` directory, with subdirectories like `common/`, `customer/`, and `driver/` to reflect service boundaries and ownership. To ensure maintainability, compatibility, and clarity.
+  - Adopted clear and consistent naming conventions for messages, fields, and enums across all proto files.
+  - Organized proto files into logical packages and directories (e.g., `proto/common/`, `proto/customer/`, `proto/driver/`) to mirror microservice domains.
+  - Always used fully qualified names for cross-package references (e.g., `fleet.proto.common.Location`).
+  - Added descriptive comments for every message, field, and enum to improve documentation and readability.
+  - Kept proto files small and focused, splitting larger definitions into multiple files within the appropriate subdirectory.
+  - Leveraged linting and formatting tools (like `buf` and pre-commit hooks) to enforce style and catch errors early.
+
+  - Links referred:
+    - https://buf.build/docs/format/style/
+    - https://protobuf.dev/best-practices/dos-donts/
+
+---
 
 ## Installation 🛠️
 
@@ -309,6 +337,59 @@ Developing Fleet has been a rewarding experience, offering numerous insights and
 - Apache Maven (v3.9.9 or higher)
 - Docker (v27.3.1 or higher)
 - Docker compose (v2.30.3-desktop.1 since im using windows)
+- Python (v3.8.10)
+
+### Steps to Build the Application
+To build the Fleet application, execute the following command:
+```bash
+# Clean and build the application
+mvn clean install
+```
+
+### Steps to Run Pre-Commit Hooks
+Follow these steps to ensure pre-commit hooks are installed and executed correctly:
+
+1. **If Pre-Commit is Already Installed**:
+  Run the following commands:
+  ```bash
+  pre-commit install
+  pre-commit run --all
+  ```
+
+2. **If Pre-Commit is Not Installed**:
+  Ensure you are using Python 3.8.10 (newer Python and pre-commit versions may have compatibility issues). Then, execute:
+  ```bash
+  pip install -r requirements.txt
+  pre-commit install
+  pre-commit run --all
+  ```
+
+3. **If Using Windows and Pre-Commit Command is Not Found**:
+  Verify your Python version by running:
+  ```bash
+  python3 --version
+  ```
+  Ensure the output is:
+  ```
+  Python 3.8.10
+  ```
+
+  Then, use the following commands to install and run pre-commit hooks:
+  ```bash
+  python3 -m pre_commit install
+  python3 -m pre_commit run --all
+  ```
+
+4. **Auto update Pre-Commit Hooks**:
+```bash
+pre-commit autoupdate
+```
+or
+```bash
+python3 -m pre_commit autoupdate
+```
+
+----
 
 
 ### Steps to Run the Application

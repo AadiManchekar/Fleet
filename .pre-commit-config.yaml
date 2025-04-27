@@ -1,0 +1,30 @@
+---
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v5.0.0
+  hooks:
+  - id: check-yaml
+  - id: check-json
+  - id: end-of-file-fixer
+    exclude: \.(md|excalidraw)$
+  - id: trailing-whitespace
+    exclude: \.(md|excalidraw)$
+  - id: check-case-conflict
+  - id: check-executables-have-shebangs
+  - id: detect-aws-credentials
+  - id: detect-private-key
+- repo: https://github.com/rhysd/actionlint
+  rev: v1.7.7
+  hooks:
+  - id: actionlint
+- repo: https://github.com/gitleaks/gitleaks
+  rev: v8.24.3
+  hooks:
+  - id: gitleaks
+- repo: https://github.com/bufbuild/buf
+  rev: v1.52.1
+  hooks:
+  - id: buf-format
+    args:
+    - proto
+    - -w
