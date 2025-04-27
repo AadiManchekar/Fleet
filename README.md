@@ -1,10 +1,12 @@
 # Fleet 🚖
 Fleet is my attempt at building a functional and scalable cab aggregator application while honing my problem-solving and decision-making abilities. Every technical and architectural choice comes with trade-offs, and I aim to document each one, providing insights into the challenges and solutions involved in building such a platform. This project is a continuous work in progress, evolving as I acquire new knowledge and skills.
 
+---
 
 ## Why Fleet Uses GPL 3.0 📜
 Fleet is licensed under GPL 3.0 to promote open collaboration and ensure that any modifications or improvements made by others remain open-source. This aligns with the project's goal of learning and sharing knowledge while fostering a community-driven development approach.
 
+---
 
 ## Requirements 📝
 
@@ -30,6 +32,7 @@ To ensure the system is robust, scalable, and maintainable, the following non-fu
   - Log all critical events for debugging.
   - Use tools like OpenTelemetry for real-time monitoring and observability.
 
+---
 
 ## Architecture 🏗️
 
@@ -274,10 +277,12 @@ NLB is used for driver connections to ensure low-latency, persistent communicati
 **Final Decision:**
 Using gRPC for bidirectional communication ensures robust, real-time, fast & reliable communication
 
+---
 
 ## Challenges Faced 🧗
 Building Fleet came with its own set of challenges, which provided valuable learning opportunities:
 
+---
 
 ## Learnings Along the Way 📚
 Developing Fleet has been a rewarding experience, offering numerous insights and learnings:
@@ -310,6 +315,20 @@ Developing Fleet has been a rewarding experience, offering numerous insights and
     - https://github.com/diffplug/spotless/blob/main/plugin-maven/README.md#protobuf
     - https://pre-commit.com/#usage
     - https://pre-commit.com/#plugins
+
+6. **Protobuf Design Best Practices**  Designing Protobuf files for Fleet involved structuring all `.proto` files under the `proto/` directory, with subdirectories like `common/`, `customer/`, and `driver/` to reflect service boundaries and ownership. To ensure maintainability, compatibility, and clarity.
+  - Adopted clear and consistent naming conventions for messages, fields, and enums across all proto files.
+  - Organized proto files into logical packages and directories (e.g., `proto/common/`, `proto/customer/`, `proto/driver/`) to mirror microservice domains.
+  - Always used fully qualified names for cross-package references (e.g., `fleet.proto.common.Location`).
+  - Added descriptive comments for every message, field, and enum to improve documentation and readability.
+  - Kept proto files small and focused, splitting larger definitions into multiple files within the appropriate subdirectory.
+  - Leveraged linting and formatting tools (like `buf` and pre-commit hooks) to enforce style and catch errors early.
+
+  - Links referred:
+    - https://buf.build/docs/format/style/
+    - https://protobuf.dev/best-practices/dos-donts/
+
+---
 
 ## Installation 🛠️
 
