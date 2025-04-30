@@ -31,5 +31,10 @@ jobs:
       run: mvn dependency:resolve dependency:resolve-plugins
     - name: Check formatting with Spotless
       run: mvn spotless:check
+    - name: "Spin up Docker Compose"
+      continue-on-error: false
+      uses: hoverkraft-tech/compose-action@v2.0.1
+      with:
+        compose-file: "./tools/docker/docker-compose.yaml"
     - name: mvn clean install
       run: mvn clean install
