@@ -282,6 +282,27 @@ Using gRPC for bidirectional communication ensures robust, real-time, fast & rel
 ## Challenges Faced 🧗
 Building Fleet came with its own set of challenges, which provided valuable learning opportunities:
 
+1. **Docker Compose Command: Why Only the First Arg Runs**  
+What i wrote (Did not work)
+```yaml
+command: chmod +x /vault/workflow-vault.sh && /vault/workflow-vault.sh
+```
+Docker Compose interpreted this as an exec form.
+So, in the container, this was equivalent to:
+```json
+"Args": [
+  "chmod",
+  "+x",
+  "/vault/workflow-vault.sh"
+]
+```
+Inorder to solve it, i re-wrote it as
+```yaml
+command: ["/bin/sh", "-c", "chmod +x /vault/workflow-vault.sh && /vault/workflow-vault.sh"]
+```
+- **Exec Form vs Shell Form:**  
+  - When you use `command:` as a plain string or YAML list, Docker Compose uses the exec form, which does **not** invoke a shell. It splits the command by spaces and only runs the first command with the rest as arguments. Shell features like `&&` are ignored.
+  - When you explicitly use `/bin/sh -c "..."`, Docker runs the command through a shell. The shell understands `&&`, so all chained commands are executed in sequence.
 ---
 
 ## Learnings Along the Way 📚
