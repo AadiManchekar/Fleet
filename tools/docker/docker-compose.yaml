@@ -17,6 +17,7 @@ services:
     environment:
       VAULT_DEV_ROOT_TOKEN_ID: 00000000-0000-0000-0000-000000000000
       VAULT_DEV_LISTEN_ADDRESS: 0.0.0.0:8201
+      VAULT_ADDR: http://127.0.0.1:8201
       VAULT_LOCAL_CONFIG: |
         {
           "ui": true,
@@ -36,9 +37,9 @@ services:
     command:
     - /bin/sh
     - -c
-    - chmod +x /vault/workflow-vault.sh && /vault/workflow-vault.sh
+    - chmod +x /vault/init-vault.sh && /vault/init-vault.sh
     volumes:
     - vault-data:/vault/file
-    - ./vault/workflow-vault.sh:/vault/workflow-vault.sh
+    - ./vault/init-vault.sh:/vault/init-vault.sh
 volumes:
   vault-data: null
