@@ -33,8 +33,12 @@ services:
         }
     cap_add:
     - IPC_LOCK
-    command: server -dev -dev-root-token-id="00000000-0000-0000-0000-000000000000"
+    command:
+    - /bin/sh
+    - -c
+    - chmod +x /vault/workflow-vault.sh && /vault/workflow-vault.sh
     volumes:
     - vault-data:/vault/file
+    - ./vault/workflow-vault.sh:/vault/workflow-vault.sh
 volumes:
   vault-data: null
