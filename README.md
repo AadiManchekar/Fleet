@@ -363,8 +363,13 @@ Developing Fleet has been a rewarding experience, offering numerous insights and
 ### Steps to Build the Application
 To build the Fleet application, execute the following command:
 ```bash
-# Clean and build the application
-mvn clean install
+cd tools/build  
+
+# Build the application with tests  
+sh compile.sh
+
+# Build the application but skip tests  
+sh compile-skip-tests.sh
 ```
 
 ### Steps to Run Pre-Commit Hooks
