@@ -36,5 +36,8 @@ jobs:
       uses: hoverkraft-tech/compose-action@v2.0.1
       with:
         compose-file: ./tools/docker/docker-compose.yaml
-    - name: mvn clean install
-      run: mvn clean install
+    - name: Compile and Test
+      run: |
+        cd tools/build
+        chmod +x ./compile.sh
+        ./compile.sh
