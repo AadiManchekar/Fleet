@@ -56,3 +56,6 @@ target/
 
 ### VS Code ###
 .vscode/
+
+### Child module's proto files###
+/src/main/proto
