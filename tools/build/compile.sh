@@ -8,7 +8,6 @@ function print_success {
     print_line_break
     echo -e "\033[0;32mSUCCESS\033[0m"  # Dark green
     print_line_break
-    exit 0
 }
 
 function print_error {
@@ -45,3 +44,14 @@ fi
 echo -e "\033[0;32mACTION: mvn install\033[0m"  # Dark green
 print_line_break
 mvn install && print_success || print_error
+
+# If running in GitHub CI, skip docker compose down
+if [ "$GITHUB_ACTIONS" != "true" ]; then
+    echo -e "\033[0;32mACTION: docker compose down\033[0m"  # Dark green
+    print_line_break
+    echo "Stopping the docker compose..."
+    cd tools/docker
+    docker-compose down
+    cd ../..
+    print_line_break
+fi
