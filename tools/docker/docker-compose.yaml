@@ -1,0 +1,45 @@
+---
+services:
+  vault:
+    image: hashicorp/vault:1.19
+    container_name: vault-0
+    ports:
+    - 8201:8201
+    healthcheck:
+      test:
+      - CMD
+      - vault
+      - status
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: on-failure:10
+    environment:
+      VAULT_DEV_ROOT_TOKEN_ID: 00000000-0000-0000-0000-000000000000
+      VAULT_DEV_LISTEN_ADDRESS: 0.0.0.0:8201
+      VAULT_ADDR: http://127.0.0.1:8201
+      VAULT_LOCAL_CONFIG: |
+        {
+          "ui": true,
+          "listener": {
+            "tcp": {
+              "tls_disable": true
+            }
+          },
+          "storage": {
+            "file": {
+              "path": "/vault/file"
+            }
+          },
+        }
+    cap_add:
+    - IPC_LOCK
+    command:
+    - /bin/sh
+    - -c
+    - chmod +x /vault/init-vault.sh && /vault/init-vault.sh
+    volumes:
+    - vault-data:/vault/file
+    - ./vault/init-vault.sh:/vault/init-vault.sh
+volumes:
+  vault-data: null

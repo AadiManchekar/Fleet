@@ -92,14 +92,14 @@ To ensure the system is robust, scalable, and maintainable, the following non-fu
 
 ### High-Level Design (HLD)
 
-![Fleet HLD v3](docs/architecture/v3/images/HLD.png)
+![Fleet HLD v4](docs/architecture/v4/images/HLD.png)
 
 *Figure 1: High-Level Design for Fleet*
 
 
 ### Clean Code Architecture
 
-![Fleet Clean Code Architecture](docs/architecture/v3/images/Clean-Code-Architecture.png)
+![Fleet Clean Code Architecture v4](docs/architecture/v4/images/Clean-Code-Architecture.png)
 
 *Figure 2: Clean Code Architecture for Fleet*
 
@@ -282,6 +282,41 @@ Using gRPC for bidirectional communication ensures robust, real-time, fast & rel
 ## Challenges Faced 🧗
 Building Fleet came with its own set of challenges, which provided valuable learning opportunities:
 
+1. **Docker Compose Command: Why Only the First Arg Runs**  
+What i wrote (Did not work)
+```yaml
+command: chmod +x /vault/workflow-vault.sh && /vault/workflow-vault.sh
+```
+Docker Compose interpreted this as an exec form.
+So, in the container, this was equivalent to:
+```json
+"Args": [
+  "chmod",
+  "+x",
+  "/vault/workflow-vault.sh"
+]
+```
+Inorder to solve it, i re-wrote it as
+```yaml
+command: ["/bin/sh", "-c", "chmod +x /vault/workflow-vault.sh && /vault/workflow-vault.sh"]
+```
+- **Exec Form vs Shell Form:**  
+  - When you use `command:` as a plain string or YAML list, Docker Compose uses the exec form, which does **not** invoke a shell. It splits the command by spaces and only runs the first command with the rest as arguments. Shell features like `&&` are ignored.
+  - When you explicitly use `/bin/sh -c "..."`, Docker runs the command through a shell. The shell understands `&&`, so all chained commands are executed in sequence.  
+
+2. **Line Endings Issue (CRLF vs LF)**  
+While working with the `init-vault.sh` script, I encountered an issue where the script was present in the container but failed to execute with the error:  
+`/bin/sh: /vault/init-vault.sh: not found`.  
+
+- **Root Cause Analysis (RCA):**  
+The issue was caused by the script having Windows-style line endings (`CRLF`) instead of Unix-style line endings (`LF`). Linux-based containers require Unix-style line endings, and the presence of `CRLF` made the script unreadable or unexecutable.
+
+- To resolve the issue, I converted the line endings to `LF` using the following steps:
+  - I used **vscode** as it provides an option to change line endings.
+  - **You can also use `dos2unix` Command:**
+    ```bash
+    dos2unix ./vault/init-vault.sh
+    ```
 ---
 
 ## Learnings Along the Way 📚
@@ -326,7 +361,20 @@ Developing Fleet has been a rewarding experience, offering numerous insights and
 
   - Links referred:
     - https://buf.build/docs/format/style/
-    - https://protobuf.dev/best-practices/dos-donts/
+    - https://protobuf.dev/best-practices/dos-donts/  
+
+7. **Vault**  
+Vault is used to securely store both static and dynamic secrets for the Fleet application. For simplicity, token-based authentication is currently implemented, and the Vault server is running in development mode. The Vault UI can be accessed at:  
+[http://vault-0:8201/ui](http://vault-0:8201/ui)  
+
+  - **How Vault Fits Fleet's Current and Future Needs:**  
+    - **Transit Engine**: Vault can be used to encrypt and decrypt sensitive data (e.g., customer or driver information) without exposing encryption keys to the application. This ensures data security during transit.  
+    - **Database Secrets Engine**: Vault can dynamically generate database credentials for services, ensuring that secrets are short-lived and reducing the risk of credential leakage.  
+    - **Application Secrets**: Spring Boot applications can query Vault to fetch secrets stored under paths like `secrets/app-name`. This allows each microservice to securely retrieve its respective secrets (e.g., API keys, database credentials) at runtime.  
+
+  - Links referred:
+    - https://gist.github.com/Mishco/b47b341f852c5934cf736870f0b5da81
+    - https://hub.docker.com/r/hashicorp/vault
 
 ---
 
@@ -342,8 +390,13 @@ Developing Fleet has been a rewarding experience, offering numerous insights and
 ### Steps to Build the Application
 To build the Fleet application, execute the following command:
 ```bash
-# Clean and build the application
-mvn clean install
+cd tools/build  
+
+# Build the application with tests  
+sh compile.sh
+
+# Build the application but skip tests  
+sh compile-skip-tests.sh
 ```
 
 ### Steps to Run Pre-Commit Hooks

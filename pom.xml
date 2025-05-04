@@ -51,11 +51,19 @@
         <maven-surefire-plugin>3.5.3</maven-surefire-plugin>
         <protobuf-java.version>3.25.6</protobuf-java.version>
         <spotless-maven-plugin>2.44.3</spotless-maven-plugin>
+        <spring-cloud.version>2024.0.1</spring-cloud.version>
         <spring-grpc.version>0.7.0</spring-grpc.version>
         <springdoc-openapi-starter-webmvc-ui>2.8.6</springdoc-openapi-starter-webmvc-ui>
     </properties>
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <dependency>
                 <groupId>org.springframework.grpc</groupId>
                 <artifactId>spring-grpc-dependencies</artifactId>
@@ -86,6 +94,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-vault-config</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.grpc</groupId>
