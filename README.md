@@ -361,7 +361,20 @@ Developing Fleet has been a rewarding experience, offering numerous insights and
 
   - Links referred:
     - https://buf.build/docs/format/style/
-    - https://protobuf.dev/best-practices/dos-donts/
+    - https://protobuf.dev/best-practices/dos-donts/  
+
+7. **Vault**  
+Vault is used to securely store both dynamic and static secrets for the Fleet application. For simplicity, token-based authentication is currently implemented, and the Vault server is running in development mode. The Vault UI can be accessed at:  
+[http://vault-0:8201/ui](http://vault-0:8201/ui)  
+
+  - **How Vault Fits Fleet's Current and Future Needs:**  
+    - **Transit Engine**: Vault can be used to encrypt and decrypt sensitive data (e.g., customer or driver information) without exposing encryption keys to the application. This ensures data security during transit.  
+    - **Database Secrets Engine**: Vault can dynamically generate database credentials for services, ensuring that secrets are short-lived and reducing the risk of credential leakage.  
+    - **Application Secrets**: Spring Boot applications can query Vault to fetch secrets stored under paths like `secrets/app-name`. This allows each microservice to securely retrieve its respective secrets (e.g., API keys, database credentials) at runtime.  
+
+  - Links referred:
+    - https://gist.github.com/Mishco/b47b341f852c5934cf736870f0b5da81
+    - https://hub.docker.com/r/hashicorp/vault
 
 ---
 
