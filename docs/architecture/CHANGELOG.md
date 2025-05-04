@@ -1,5 +1,7 @@
 # Changelog
 
+## v4
+- Integrated HCP Vault for static and dynamic secrets management.
 
 ## v3
 - Updated HLD architecture based on whiteboard design (HLD-v3-client-side-only). 

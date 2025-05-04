@@ -92,14 +92,14 @@ To ensure the system is robust, scalable, and maintainable, the following non-fu
 
 ### High-Level Design (HLD)
 
-![Fleet HLD v3](docs/architecture/v3/images/HLD.png)
+![Fleet HLD v4](docs/architecture/v4/images/HLD.png)
 
 *Figure 1: High-Level Design for Fleet*
 
 
 ### Clean Code Architecture
 
-![Fleet Clean Code Architecture](docs/architecture/v3/images/Clean-Code-Architecture.png)
+![Fleet Clean Code Architecture v4](docs/architecture/v4/images/Clean-Code-Architecture.png)
 
 *Figure 2: Clean Code Architecture for Fleet*
 
@@ -364,7 +364,7 @@ Developing Fleet has been a rewarding experience, offering numerous insights and
     - https://protobuf.dev/best-practices/dos-donts/  
 
 7. **Vault**  
-Vault is used to securely store both dynamic and static secrets for the Fleet application. For simplicity, token-based authentication is currently implemented, and the Vault server is running in development mode. The Vault UI can be accessed at:  
+Vault is used to securely store both static and dynamic secrets for the Fleet application. For simplicity, token-based authentication is currently implemented, and the Vault server is running in development mode. The Vault UI can be accessed at:  
 [http://vault-0:8201/ui](http://vault-0:8201/ui)  
 
   - **How Vault Fits Fleet's Current and Future Needs:**  
