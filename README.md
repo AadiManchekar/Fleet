@@ -302,7 +302,21 @@ command: ["/bin/sh", "-c", "chmod +x /vault/workflow-vault.sh && /vault/workflow
 ```
 - **Exec Form vs Shell Form:**  
   - When you use `command:` as a plain string or YAML list, Docker Compose uses the exec form, which does **not** invoke a shell. It splits the command by spaces and only runs the first command with the rest as arguments. Shell features like `&&` are ignored.
-  - When you explicitly use `/bin/sh -c "..."`, Docker runs the command through a shell. The shell understands `&&`, so all chained commands are executed in sequence.
+  - When you explicitly use `/bin/sh -c "..."`, Docker runs the command through a shell. The shell understands `&&`, so all chained commands are executed in sequence.  
+
+2. **Line Endings Issue (CRLF vs LF)**  
+While working with the `init-vault.sh` script, I encountered an issue where the script was present in the container but failed to execute with the error:  
+`/bin/sh: /vault/init-vault.sh: not found`.  
+
+- **Root Cause Analysis (RCA):**  
+The issue was caused by the script having Windows-style line endings (`CRLF`) instead of Unix-style line endings (`LF`). Linux-based containers require Unix-style line endings, and the presence of `CRLF` made the script unreadable or unexecutable.
+
+- To resolve the issue, I converted the line endings to `LF` using the following steps:
+  - I used **vscode** as it provides an option to change line endings.
+  - **You can also use `dos2unix` Command:**
+    ```bash
+    dos2unix ./vault/init-vault.sh
+    ```
 ---
 
 ## Learnings Along the Way 📚
