@@ -41,5 +41,10 @@ services:
     volumes:
     - vault-data:/vault/file
     - ./vault/init-vault.sh:/vault/init-vault.sh
+  zipkin:
+    image: openzipkin/zipkin:3.5
+    container_name: zipkin
+    ports:
+    - 9411:9411
 volumes:
   vault-data: null
