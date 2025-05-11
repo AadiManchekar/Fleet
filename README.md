@@ -316,7 +316,44 @@ The issue was caused by the script having Windows-style line endings (`CRLF`) in
   - **You can also use `dos2unix` Command:**
     ```bash
     dos2unix ./vault/init-vault.sh
-    ```
+    ```  
+
+### 3. Docker Container Healthchecks
+
+While setting up healthchecks for containers, I faced a couple of interesting challenges:
+
+- **Kafka-UI Healthcheck:**  
+  I initially wanted to use `curl` to check the `/actuator/health` endpoint, but the official `provectuslabs/kafka-ui` image does not include `curl` and installing it at runtime failed due to lack of permissions (`apk add --no-cache curl` resulted in a "Permission denied" error).  
+  To keep the image unchanged and avoid building a custom image, I switched to using `wget`, which is available by default. The healthcheck looks like this:
+  ```yaml
+  healthcheck:
+    test: ["CMD-SHELL",
+      "wget -qO- http://localhost:8080/actuator/health \
+        | grep -q '\"status\":\"UP\"'"]
+    interval: 30s
+    timeout: 10s
+    retries: 3
+  ```
+  **How it works:**  
+  - `wget -qO- http://localhost:8080/actuator/health` fetches the health endpoint and outputs the response to stdout.
+  - `grep -q '"status":"UP"'` searches for the string `"status":"UP"` in the response.
+  - If `grep` finds the string, it exits with code `0` (success), signaling the container is healthy.
+  - If not found, `grep` exits with code `1` (failure), marking the container as unhealthy.
+
+- **Kafka Healthcheck:**  
+  For Kafka, I used the following healthcheck to ensure the broker is up and responding:
+  ```yaml
+  healthcheck:
+    test: kafka-cluster.sh cluster-id --bootstrap-server localhost:9092 || exit 1
+    interval: 30s
+    timeout: 10s
+    retries: 3
+  ```
+  **How it works:**  
+  - `kafka-cluster.sh cluster-id --bootstrap-server localhost:9092` attempts to fetch the Kafka cluster ID.
+  - If the command succeeds (exit code `0`), the healthcheck passes and the container is considered healthy.
+  - If the command fails (e.g., Kafka is not ready), it returns a non-zero exit code, so `|| exit 1` ensures the healthcheck fails with exit code `1`.   
+
 ---
 
 ## Learnings Along the Way 📚
