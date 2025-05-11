@@ -1,5 +1,45 @@
 ---
 services:
+  zookeeper:
+    image: wurstmeister/zookeeper:latest
+    container_name: zookeeper-0
+    ports:
+    - 2181:2181
+  kafka:
+    image: wurstmeister/kafka:latest
+    container_name: kafka-0
+    ports:
+    - 9092:9092
+    healthcheck:
+      test: kafka-cluster.sh cluster-id --bootstrap-server localhost:9092 || exit
+        1
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    environment:
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    depends_on:
+    - zookeeper
+  kafka-ui:
+    image: provectuslabs/kafka-ui:v0.7.2
+    container_name: kafka-ui
+    ports:
+    - 7080:8080
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - wget -qO- http://localhost:8080/actuator/health | grep -q '"status":"UP"'
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    environment:
+      KAFKA_CLUSTERS_0_NAME: fleet-kafka
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
+    depends_on:
+      kafka:
+        condition: service_healthy
   vault:
     image: hashicorp/vault:1.19
     container_name: vault-0
