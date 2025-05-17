@@ -40,6 +40,9 @@
             </properties>
         </developer>
     </developers>
+    <modules>
+        <module>dummy-child-module</module>
+    </modules>
     <properties>
         <google-java-format>1.26.0</google-java-format>
         <grpc.version>1.70.0</grpc.version>
@@ -100,14 +103,6 @@
             <artifactId>spring-cloud-starter-vault-config</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.grpc</groupId>
-            <artifactId>spring-grpc-spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.kafka</groupId>
-            <artifactId>spring-kafka</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>${springdoc-openapi-starter-webmvc-ui}</version>
@@ -119,16 +114,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.grpc</groupId>
-            <artifactId>spring-grpc-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.kafka</groupId>
-            <artifactId>spring-kafka-test</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -174,10 +159,6 @@
                             <indentSchemaLocation>false</indentSchemaLocation>
                             <indentAttribute>all</indentAttribute>
                             <predefinedSortOrder>recommended_2008_06</predefinedSortOrder>
-                            <sortDependencies>scope,artifactId</sortDependencies>
-                            <sortDependencyManagement>groupId,artifactId</sortDependencyManagement>
-                            <sortDependencyExclusions>groupId,artifactId</sortDependencyExclusions>
-                            <sortPlugins>groupId,artifactId</sortPlugins>
                             <sortProperties>true</sortProperties>
                             <sortModules>false</sortModules>
                             <sortExecutions>true</sortExecutions>
