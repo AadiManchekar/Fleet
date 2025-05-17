@@ -1,0 +1,25 @@
+---
+server:
+  port: 9426
+spring:
+  application:
+    name: dummy-child-module
+  config:
+    import: vault://
+  cloud:
+    vault:
+      uri: http://vault:8201
+      token: 00000000-0000-0000-0000-000000000000
+      kv:
+        enabled: true
+        backend: secret
+  kafka:
+    bootstrap-servers: PLAINTEXT://kafka:9092
+management:
+  health:
+    vault:
+      enabled: true
+  tracing:
+    zipkin:
+      sampling:
+        probability: 1.0
