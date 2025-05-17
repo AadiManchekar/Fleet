@@ -340,19 +340,6 @@ While setting up healthchecks for containers, I faced a couple of interesting ch
   - If `grep` finds the string, it exits with code `0` (success), signaling the container is healthy.
   - If not found, `grep` exits with code `1` (failure), marking the container as unhealthy.
 
-- **Kafka Healthcheck:**  
-  For Kafka, I used the following healthcheck to ensure the broker is up and responding:
-  ```yaml
-  healthcheck:
-    test: kafka-cluster.sh cluster-id --bootstrap-server localhost:9092 || exit 1
-    interval: 30s
-    timeout: 10s
-    retries: 3
-  ```
-  **How it works:**  
-  - `kafka-cluster.sh cluster-id --bootstrap-server localhost:9092` attempts to fetch the Kafka cluster ID.
-  - If the command succeeds (exit code `0`), the healthcheck passes and the container is considered healthy.
-  - If the command fails (e.g., Kafka is not ready), it returns a non-zero exit code, so `|| exit 1` ensures the healthcheck fails with exit code `1`.   
 
 ---
 
@@ -413,6 +400,11 @@ Vault is used to securely store both static and dynamic secrets for the Fleet ap
     - https://gist.github.com/Mishco/b47b341f852c5934cf736870f0b5da81
     - https://hub.docker.com/r/hashicorp/vault
 
+8. **Kafka and ZooKeeper Setup**
+  - Setting up a reliable Kafka environment was crucial for Fleet's event-driven architecture. Learning how to properly configure Kafka and ZooKeeper in Docker Compose presented challenges, particularly with setting proper environment-variables, healthchecks etc. I'm using **Confluent Kafka and Zookeeper** as many enterpises are utilizing it.
+
+  - Links referred:
+    - https://www.geeksforgeeks.org/getting-started-with-spring-boot-3-kafka-over-docker-with-docker-composeyaml/
 ---
 
 ## Installation 🛠️
