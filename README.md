@@ -316,7 +316,31 @@ The issue was caused by the script having Windows-style line endings (`CRLF`) in
   - **You can also use `dos2unix` Command:**
     ```bash
     dos2unix ./vault/init-vault.sh
-    ```
+    ```  
+
+### 3. Docker Container Healthchecks
+
+While setting up healthchecks for containers, I faced a couple of interesting challenges:
+
+- **Kafka-UI Healthcheck:**  
+  I initially wanted to use `curl` to check the `/actuator/health` endpoint, but the official `provectuslabs/kafka-ui` image does not include `curl` and installing it at runtime failed due to lack of permissions (`apk add --no-cache curl` resulted in a "Permission denied" error).  
+  To keep the image unchanged and avoid building a custom image, I switched to using `wget`, which is available by default. The healthcheck looks like this:
+  ```yaml
+  healthcheck:
+    test: ["CMD-SHELL",
+      "wget -qO- http://localhost:8080/actuator/health \
+        | grep -q '\"status\":\"UP\"'"]
+    interval: 30s
+    timeout: 10s
+    retries: 3
+  ```
+  **How it works:**  
+  - `wget -qO- http://localhost:8080/actuator/health` fetches the health endpoint and outputs the response to stdout.
+  - `grep -q '"status":"UP"'` searches for the string `"status":"UP"` in the response.
+  - If `grep` finds the string, it exits with code `0` (success), signaling the container is healthy.
+  - If not found, `grep` exits with code `1` (failure), marking the container as unhealthy.
+
+
 ---
 
 ## Learnings Along the Way 📚
@@ -376,6 +400,11 @@ Vault is used to securely store both static and dynamic secrets for the Fleet ap
     - https://gist.github.com/Mishco/b47b341f852c5934cf736870f0b5da81
     - https://hub.docker.com/r/hashicorp/vault
 
+8. **Kafka and ZooKeeper Setup**
+  - Setting up a reliable Kafka environment was crucial for Fleet's event-driven architecture. Learning how to properly configure Kafka and ZooKeeper in Docker Compose presented challenges, particularly with setting proper environment-variables, healthchecks etc. I'm using **Confluent Kafka and Zookeeper** as many enterpises are utilizing it.
+
+  - Links referred:
+    - https://www.geeksforgeeks.org/getting-started-with-spring-boot-3-kafka-over-docker-with-docker-composeyaml/
 ---
 
 ## Installation 🛠️
