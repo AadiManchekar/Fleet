@@ -79,12 +79,7 @@ services:
             "tcp": {
               "tls_disable": true
             }
-          },
-          "storage": {
-            "file": {
-              "path": "/vault/file"
-            }
-          },
+          }
         }
     cap_add:
     - IPC_LOCK
@@ -93,7 +88,6 @@ services:
     - -c
     - chmod +x /vault/init-vault.sh && /vault/init-vault.sh
     volumes:
-    - vault-data:/vault/file
     - ./vault/init-vault.sh:/vault/init-vault.sh
   zipkin:
     image: openzipkin/zipkin:3.5
