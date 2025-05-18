@@ -1,10 +1,20 @@
 ---
 services:
+  dummy-child-module:
+    image: dummy-child-module
+    container_name: dummy-child-module
+    ports:
+      - "9426:9426"
+    depends_on:
+      kafka:
+        condition: service_healthy
+      vault:
+        condition: service_healthy
   zookeeper:
     image: confluentinc/cp-zookeeper:7.9.1
     container_name: zookeeper-0
     ports:
-    - 2181:2181
+      - 2181:2181
     healthcheck:
       test: nc -z localhost 2181 || exit -1
       interval: 10s
@@ -17,14 +27,14 @@ services:
     image: confluentinc/cp-kafka:7.9.1
     container_name: kafka-0
     ports:
-    - 9092:9092
+      - 9092:9092
     healthcheck:
       test:
-      - CMD
-      - kafka-topics
-      - --bootstrap-server
-      - kafka:9092
-      - --list
+        - CMD
+        - kafka-topics
+        - --bootstrap-server
+        - kafka:9092
+        - --list
       interval: 10s
       timeout: 10s
       retries: 6
@@ -40,11 +50,11 @@ services:
     image: provectuslabs/kafka-ui:v0.7.2
     container_name: kafka-ui
     ports:
-    - 7080:8080
+      - 7080:8080
     healthcheck:
       test:
-      - CMD-SHELL
-      - wget -qO- http://localhost:8080/actuator/health | grep -q '"status":"UP"'
+        - CMD-SHELL
+        - wget -qO- http://localhost:8080/actuator/health | grep -q '"status":"UP"'
       interval: 10s
       timeout: 10s
       retries: 6
@@ -58,12 +68,12 @@ services:
     image: hashicorp/vault:1.19
     container_name: vault-0
     ports:
-    - 8201:8201
+      - 8201:8201
     healthcheck:
       test:
-      - CMD
-      - vault
-      - status
+        - CMD
+        - vault
+        - status
       interval: 30s
       timeout: 10s
       retries: 3
@@ -82,17 +92,17 @@ services:
           }
         }
     cap_add:
-    - IPC_LOCK
+      - IPC_LOCK
     command:
-    - /bin/sh
-    - -c
-    - chmod +x /vault/init-vault.sh && /vault/init-vault.sh
+      - /bin/sh
+      - -c
+      - chmod +x /vault/init-vault.sh && /vault/init-vault.sh
     volumes:
-    - ./vault/init-vault.sh:/vault/init-vault.sh
+      - ./vault/init-vault.sh:/vault/init-vault.sh
   zipkin:
     image: openzipkin/zipkin:3.5
     container_name: zipkin
     ports:
-    - 9411:9411
+      - 9411:9411
 volumes:
   vault-data: null

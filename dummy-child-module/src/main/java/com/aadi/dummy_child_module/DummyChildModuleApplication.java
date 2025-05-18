@@ -6,8 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class DummyChildModuleApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DummyChildModuleApplication.class, args);
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(DummyChildModuleApplication.class, args);
+    }
 }

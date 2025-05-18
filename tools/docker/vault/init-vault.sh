@@ -28,10 +28,8 @@ vault secrets enable database
 
 # Configure secrets for dummy-child-module
 vault kv put secret/dummy-child-module \
-    # Sample database access credentials
     db.username=admin \
     db.password=password \
-    # Sample application specific secrets
     secrettext=123456
 
 echo "-------------------------Vault is ready-------------------------"
