@@ -2,7 +2,7 @@ package com.aadi.dummy_child_module.domain.impl;
 
 import com.aadi.dummy_child_module.api.contract.MessagePublisher;
 import com.aadi.dummy_child_module.api.dto.BasicMessageDTO;
-import com.aadi.dummy_child_module.infrastructure.impl.KafkaMessagePublisherImpl;
+import com.aadi.dummy_child_module.spi.contract.KafkaMessagePublisher;
 import com.aadi.dummy_child_module.spi.dto.KafkaMessageDTO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -13,9 +13,9 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class MessagePublisherImpl implements MessagePublisher {
 
-    private final KafkaMessagePublisherImpl kafkaMessagePublisher;
+    private final KafkaMessagePublisher kafkaMessagePublisher;
 
-    public MessagePublisherImpl(KafkaMessagePublisherImpl kafkaMessagePublisher) {
+    public MessagePublisherImpl(KafkaMessagePublisher kafkaMessagePublisher) {
         this.kafkaMessagePublisher = kafkaMessagePublisher;
     }
 

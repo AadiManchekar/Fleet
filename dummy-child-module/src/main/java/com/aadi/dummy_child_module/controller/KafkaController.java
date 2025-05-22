@@ -1,8 +1,8 @@
 package com.aadi.dummy_child_module.controller;
 
+import com.aadi.dummy_child_module.api.contract.MessagePublisher;
 import com.aadi.dummy_child_module.api.dto.BasicMessageDTO;
 import com.aadi.dummy_child_module.controller.dto.ComplexMessageDTO;
-import com.aadi.dummy_child_module.domain.impl.MessagePublisherImpl;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/kafka/producer")
 public class KafkaController {
 
-    private final MessagePublisherImpl kafkaMessagePublisher;
+    private final MessagePublisher kafkaMessagePublisher;
 
-    public KafkaController(MessagePublisherImpl kafkaMessagePublisher) {
+    public KafkaController(MessagePublisher kafkaMessagePublisher) {
         this.kafkaMessagePublisher = kafkaMessagePublisher;
     }
 
