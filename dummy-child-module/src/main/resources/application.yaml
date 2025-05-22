@@ -16,10 +16,16 @@ spring:
   kafka:
     bootstrap-servers: PLAINTEXT://kafka:9092
 management:
+  endpoints:
+    web:
+      exposure:
+        include: "metrics,health,info"
   health:
     vault:
       enabled: true
   tracing:
-    zipkin:
-      sampling:
-        probability: 1.0
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: http://zipkin:9411/api/v2/spans
