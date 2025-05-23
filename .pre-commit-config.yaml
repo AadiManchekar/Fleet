@@ -28,3 +28,7 @@ repos:
     args:
     - proto
     - -w
+- repo: https://github.com/hadolint/hadolint
+  rev: v2.12.0
+  hooks:
+    - id: hadolint-docker
