@@ -414,7 +414,15 @@ Vault is used to securely store both static and dynamic secrets for the Fleet ap
   - Setting up a reliable Kafka environment was crucial for Fleet's event-driven architecture. Learning how to properly configure Kafka and ZooKeeper in Docker Compose presented challenges, particularly with setting proper environment-variables, healthchecks etc. I'm using **Confluent Kafka and Zookeeper** as many enterpises are utilizing it.
 
   - Links referred:
-    - https://www.geeksforgeeks.org/getting-started-with-spring-boot-3-kafka-over-docker-with-docker-composeyaml/
+    - https://www.geeksforgeeks.org/getting-started-with-spring-boot-3-kafka-over-docker-with-docker-composeyaml/   
+
+9. **Multi-Stage Docker Builds & Distroless Images**  
+Learned how to write efficient multi-stage Docker builds to minimize image size and improve security. Utilized distroless images for the runtime stage, resulting in lightweight containers with a reduced attack surface.
+  - Links referred:
+    - https://youtu.be/dwVPvZAPaxQ?si=FQKNxrB4xJxAH_Kc
+    - https://github.com/GoogleContainerTools/distroless/blob/main/java/README.md
+    - https://bell-sw.com/blog/distroless-containers-for-security-and-size/
+    - https://console.cloud.google.com/artifacts/docker/distroless/us/gcr.io/java21-debian12?inv=1&invt=AbyJhg
 ---
 
 ## Installation 🛠️
