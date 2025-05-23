@@ -1,7 +1,7 @@
 ---
 services:
   dummy-child-module:
-    image: dummy-child-module
+    image: fleet/dummy-child-module
     container_name: dummy-child-module
     ports:
     - 9426:9426
