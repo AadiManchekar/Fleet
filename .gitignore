@@ -207,6 +207,8 @@ __pycache__/
 # Distribution / packaging
 .Python
 build/
+# Keep this directory (java)
+!tools/build/
 develop-eggs/
 dist/
 downloads/
