@@ -33,6 +33,7 @@ echo -e "${GREEN}ACTION: Building dummy-child-module, SKIP_TEST=true${RESET}"
 print_line_break
 
 docker build \
+    --no-cache \
     --build-arg MODULE_NAME=dummy-child-module \
     --build-arg PORT=9426 \
     --build-arg SKIP_TESTS=true \
