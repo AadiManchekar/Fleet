@@ -1,30 +1,51 @@
 #!/bin/bash -e
 
+# Define color codes as variables
+GREEN="\033[0;32m"
+RED="\033[0;31m"
+YELLOW="\033[0;33m"
+RESET="\033[0m" # Reset to default color
+
 function print_line_break {
     echo "==========================================================================="
 }
 
 function print_success {
     print_line_break
-    echo -e "\033[0;32mSUCCESS\033[0m"  # Dark green
+    echo -e "${GREEN}SUCCESS${RESET}"
     print_line_break
 }
 
 function print_error {
     print_line_break
-    echo -e "\033[0;31mERROR\033[0m"  # Red
+    echo -e "${RED}ERROR${RESET}"
     print_line_break
     exit 1
 }
 
 print_line_break
 cd $(dirname "$0")/../../
-echo -e "\033[0;33mDIRECTORY: $(pwd)\033[0m"  # Dark yellow
+echo -e "${YELLOW}DIRECTORY: $(pwd)${RESET}"
+print_line_break
+
+echo -e "${GREEN}ACTION: Building dummy-child-module${RESET}"
+print_line_break
+
+docker build \
+    --no-cache \
+    --build-arg MODULE_NAME=dummy-child-module \
+    --build-arg PORT=9426 \
+    -t fleet/dummy-child-module \
+    -f tools/docker/Dockerfile . && print_success || print_error
+
+# Integration tests
+print_line_break
+echo -e "${YELLOW}Executing Integration tests: $(pwd)${RESET}"
 print_line_break
 
 # If running in GitHub CI, skip docker compose up
 if [ "$GITHUB_ACTIONS" != "true" ]; then
-    echo -e "\033[0;32mACTION: docker compose up -d\033[0m"  # Dark green
+    echo -e "\033[0;32mACTION: docker compose up -d\033[0m" # Dark green
     print_line_break
     echo "Starting up the docker compose..."
     cd tools/docker
@@ -33,21 +54,12 @@ if [ "$GITHUB_ACTIONS" != "true" ]; then
     print_line_break
 fi
 
-# MVN CLEAN
-echo -e "\033[0;32mACTION: mvn clean\033[0m"  # Dark green
-print_line_break
-echo "Cleaning up old build files..."
-mvn clean
-print_line_break
+# execute integration tests
+# currently, we are not having any integration tests
 
-# MVN INSTALL
-echo -e "\033[0;32mACTION: mvn install\033[0m"  # Dark green
-print_line_break
-mvn install && print_success || print_error
-
-# If running in GitHub CI, skip docker compose down
+# # If running in GitHub CI, skip docker compose down
 if [ "$GITHUB_ACTIONS" != "true" ]; then
-    echo -e "\033[0;32mACTION: docker compose down\033[0m"  # Dark green
+    echo -e "\033[0;32mACTION: docker compose down\033[0m" # Dark green
     print_line_break
     echo "Stopping the docker compose..."
     cd tools/docker
