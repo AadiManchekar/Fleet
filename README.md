@@ -399,7 +399,7 @@ Developing Fleet has been a rewarding experience, offering numerous insights and
 
 7. **Vault**  
 Vault is used to securely store both static and dynamic secrets for the Fleet application. For simplicity, token-based authentication is currently implemented, and the Vault server is running in development mode. The Vault UI can be accessed at:  
-[http://vault-0:8201/ui](http://vault-0:8201/ui)  
+[http://127.0.0.1:8201/ui/](http://127.0.0.1:8201/ui/)  
 
   - **How Vault Fits Fleet's Current and Future Needs:**  
     - **Transit Engine**: Vault can be used to encrypt and decrypt sensitive data (e.g., customer or driver information) without exposing encryption keys to the application. This ensures data security during transit.  
