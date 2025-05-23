@@ -9,11 +9,28 @@ sleep 10
 
 echo "-------------------------Running init script-------------------------"
 
-# Enable kv
+# -----------------------------
+# VAULT ENGINE INITIALIZATION
+# -----------------------------
+
+# Enable Key-Value secrets engine v1
+# This allows storing and versioning of secrets as simple key-value pairs
 vault secrets enable -version=1 kv
 
-# Enable database secrets engine
+# Enable Database secrets engine
+# This will allow dynamic generation of database credentials (in future)
 vault secrets enable database
+
+
+# -----------------------------
+# APPLICATION SECRET CONFIGURATION
+# -----------------------------
+
+# Configure secrets for dummy-child-module
+vault kv put secret/dummy-child-module \
+    db.username=admin \
+    db.password=password \
+    secrettext=123456
 
 echo "-------------------------Vault is ready-------------------------"
 
