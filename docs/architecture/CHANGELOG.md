@@ -1,5 +1,12 @@
 # Changelog
 
+## v5
+- Updated Clean-Code-Architecture diagram to better reflect dependency inversion.
+- Clarified that Domain implements the API interface.
+- Emphasized that Domain specifies the SPI interface which is implemented by Client/Infrastructure.
+- Note that Domain is Pure Java to adhere with clean architecture principles.
+- These changes better illustrate how Domain remains the central element that controls both API and SPI contracts
+
 ## v4
 - Integrated HCP Vault for static and dynamic secrets management.
 
