@@ -92,14 +92,14 @@ To ensure the system is robust, scalable, and maintainable, the following non-fu
 
 ### High-Level Design (HLD)
 
-![Fleet HLD v4](docs/architecture/v4/images/HLD.png)
+![Fleet HLD v5](docs/architecture/v5/images/HLD.png)
 
 *Figure 1: High-Level Design for Fleet*
 
 
 ### Clean Code Architecture
 
-![Fleet Clean Code Architecture v4](docs/architecture/v4/images/Clean-Code-Architecture.png)
+![Fleet Clean Code Architecture v5](docs/architecture/v5/images/Clean-Code-Architecture.png)
 
 *Figure 2: Clean Code Architecture for Fleet*
 
