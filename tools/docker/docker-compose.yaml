@@ -1,15 +1,15 @@
 ---
 services:
-  dummy-child-module:
-    image: fleet/dummy-child-modul
-    container_name: dummy-child-module
-    ports:
-    - 9426:9426
-    depends_on:
-      kafka:
-        condition: service_healthy
-      vault:
-        condition: service_healthy
+  # dummy-child-module:
+  #   image: fleet/dummy-child-module
+  #   container_name: dummy-child-module
+  #   ports:
+  #   - 9426:9426
+  #   depends_on:
+  #     kafka:
+  #       condition: service_healthy
+  #     vault:
+  #       condition: service_healthy
   zookeeper:
     image: confluentinc/cp-zookeeper:7.9.1
     container_name: zookeeper-0
