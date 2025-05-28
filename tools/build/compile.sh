@@ -44,15 +44,15 @@ echo -e "${YELLOW}Executing Integration tests: $(pwd)${RESET}"
 print_line_break
 
 # If running in GitHub CI, skip docker compose up
-if [ "$GITHUB_ACTIONS" != "true" ]; then
-    echo -e "${GREEN}ACTION: docker compose up -d${RESET}"
-    print_line_break
-    echo "Starting up the docker compose..."
-    cd tools/docker
-    docker compose up -d
-    cd ../..
-    print_line_break
-fi
+# if [ "$GITHUB_ACTIONS" != "true" ]; then
+echo -e "${GREEN}ACTION: docker compose up -d${RESET}"
+print_line_break
+echo "Starting up the docker compose..."
+cd tools/docker
+docker compose up -d
+cd ../..
+print_line_break
+# fi
 
 # wait for the containers to be up and running
 sleep 20
@@ -69,12 +69,12 @@ python dummy-child-module/src/test/python/main.py
 # currently, we are not having any integration tests
 
 # # If running in GitHub CI, skip docker compose down
-if [ "$GITHUB_ACTIONS" != "true" ]; then
-    echo -e "${GREEN}ACTION: docker compose down${RESET}"
-    print_line_break
-    echo "Stopping the docker compose..."
-    cd tools/docker
-    docker compose down
-    cd ../..
-    print_line_break
-fi
+# if [ "$GITHUB_ACTIONS" != "true" ]; then
+echo -e "${GREEN}ACTION: docker compose down${RESET}"
+print_line_break
+echo "Stopping the docker compose..."
+cd tools/docker
+docker compose down
+cd ../..
+print_line_break
+# fi
