@@ -45,7 +45,7 @@ print_line_break
 
 # If running in GitHub CI, skip docker compose up
 if [ "$GITHUB_ACTIONS" != "true" ]; then
-    echo -e "\033[0;32mACTION: docker compose up -d\033[0m" # Dark green
+    echo -e "${GREEN}ACTION: docker compose up -d${RESET}"
     print_line_break
     echo "Starting up the docker compose..."
     cd tools/docker
@@ -54,12 +54,23 @@ if [ "$GITHUB_ACTIONS" != "true" ]; then
     print_line_break
 fi
 
+# wait for the containers to be up and running
+sleep 20 
+
 # execute integration tests
+echo -e "${YELLOW}Creating virtual environment 'fleet-it'${RESET}"
+python3 -m venv fleet-it
+echo -e "${YELLOW}Activating virtual environment 'fleet-it'${RESET}"
+source fleet-it/bin/activate
+echo -e "${YELLOW}Installing Python dependencies...${RESET}"
+pip install -r tools/build/requirements.txt
+echo -e "${YELLOW}Running Python integration tests...${RESET}"
+python dummy-child-module/src/test/python/main.py
 # currently, we are not having any integration tests
 
 # # If running in GitHub CI, skip docker compose down
 if [ "$GITHUB_ACTIONS" != "true" ]; then
-    echo -e "\033[0;32mACTION: docker compose down\033[0m" # Dark green
+    echo -e "${GREEN}ACTION: docker compose down${RESET}"
     print_line_break
     echo "Stopping the docker compose..."
     cd tools/docker

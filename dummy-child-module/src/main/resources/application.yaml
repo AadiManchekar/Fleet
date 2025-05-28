@@ -19,7 +19,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: "metrics,health,info"
+        include: "health,info,metrics,prometheus"
   health:
     vault:
       enabled: true

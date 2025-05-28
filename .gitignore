@@ -201,6 +201,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+### Python Integration tests ###
+fleet-it
+
 # C extensions
 *.so
 
