@@ -55,7 +55,7 @@ if [ "$GITHUB_ACTIONS" != "true" ]; then
 fi
 
 # wait for the containers to be up and running
-sleep 20 
+sleep 20
 
 # execute integration tests
 echo -e "${YELLOW}Creating virtual environment 'fleet-it'${RESET}"
