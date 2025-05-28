@@ -43,8 +43,7 @@ print_line_break
 echo -e "${YELLOW}Executing Integration tests: $(pwd)${RESET}"
 print_line_break
 
-# If running in GitHub CI, skip docker compose up
-# if [ "$GITHUB_ACTIONS" != "true" ]; then
+# Spin up docker containers for IT
 echo -e "${GREEN}ACTION: docker compose up -d${RESET}"
 print_line_break
 echo "Starting up the docker compose..."
@@ -52,24 +51,28 @@ cd tools/docker
 docker compose up -d
 cd ../..
 print_line_break
-# fi
 
-# wait for the containers to be up and running
+# Wait for the containers to be up and running
 sleep 20
 
-# execute integration tests
-echo -e "${YELLOW}Creating virtual environment 'fleet-it'${RESET}"
-python3 -m venv fleet-it
-echo -e "${YELLOW}Activating virtual environment 'fleet-it'${RESET}"
-source fleet-it/bin/activate
-echo -e "${YELLOW}Installing Python dependencies...${RESET}"
-pip install -r tools/build/requirements.txt
-echo -e "${YELLOW}Running Python integration tests...${RESET}"
-python dummy-child-module/src/test/python/main.py
-# currently, we are not having any integration tests
+# Execute integration tests with error handling
+exitcode=0
 
-# # If running in GitHub CI, skip docker compose down
-# if [ "$GITHUB_ACTIONS" != "true" ]; then
+{
+    echo -e "${YELLOW}Creating virtual environment 'fleet-it'${RESET}"
+    python3 -m venv fleet-it
+    echo -e "${YELLOW}Activating virtual environment 'fleet-it'${RESET}"
+    source fleet-it/bin/activate
+    echo -e "${YELLOW}Installing Python dependencies...${RESET}"
+    pip install -r tools/build/requirements.txt
+    echo -e "${YELLOW}Running Python integration tests...${RESET}"
+    python dummy-child-module/src/test/python/main.py
+} || {
+    echo -e "${RED}Integration test step failed, continuing...${RESET}"
+    exitcode=1
+}
+
+# After tests, scale down the containers
 echo -e "${GREEN}ACTION: docker compose down${RESET}"
 print_line_break
 echo "Stopping the docker compose..."
@@ -77,4 +80,5 @@ cd tools/docker
 docker compose down
 cd ../..
 print_line_break
-# fi
+
+exit $exitcode

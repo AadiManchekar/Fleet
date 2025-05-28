@@ -23,10 +23,6 @@ jobs:
         java-version: 21
         distribution: temurin
         cache: maven
-    # - name: Spin up Docker Compose
-    #   uses: hoverkraft-tech/compose-action@v2.0.1
-    #   with:
-    #     compose-file: ./tools/docker/docker-compose.yaml
     - name: Build and Test
       run: |
         cd tools/build
