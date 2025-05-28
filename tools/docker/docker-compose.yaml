@@ -1,5 +1,15 @@
 ---
 services:
+  dummy-child-module:
+    image: fleet/dummy-child-module
+    container_name: dummy-child-module
+    ports:
+    - 9426:9426
+    depends_on:
+      kafka:
+        condition: service_healthy
+      vault:
+        condition: service_healthy
   zookeeper:
     image: confluentinc/cp-zookeeper:7.9.1
     container_name: zookeeper-0
@@ -71,7 +81,7 @@ services:
     environment:
       VAULT_DEV_ROOT_TOKEN_ID: 00000000-0000-0000-0000-000000000000
       VAULT_DEV_LISTEN_ADDRESS: 0.0.0.0:8201
-      VAULT_ADDR: http://127.0.0.1:8201
+      VAULT_ADDR: http://vault:8201
       VAULT_LOCAL_CONFIG: |
         {
           "ui": true,
@@ -79,12 +89,7 @@ services:
             "tcp": {
               "tls_disable": true
             }
-          },
-          "storage": {
-            "file": {
-              "path": "/vault/file"
-            }
-          },
+          }
         }
     cap_add:
     - IPC_LOCK
@@ -93,7 +98,6 @@ services:
     - -c
     - chmod +x /vault/init-vault.sh && /vault/init-vault.sh
     volumes:
-    - vault-data:/vault/file
     - ./vault/init-vault.sh:/vault/init-vault.sh
   zipkin:
     image: openzipkin/zipkin:3.5

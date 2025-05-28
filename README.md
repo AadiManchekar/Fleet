@@ -318,13 +318,10 @@ The issue was caused by the script having Windows-style line endings (`CRLF`) in
     dos2unix ./vault/init-vault.sh
     ```  
 
-### 3. Docker Container Healthchecks
 
-While setting up healthchecks for containers, I faced a couple of interesting challenges:
-
-- **Kafka-UI Healthcheck:**  
-  I initially wanted to use `curl` to check the `/actuator/health` endpoint, but the official `provectuslabs/kafka-ui` image does not include `curl` and installing it at runtime failed due to lack of permissions (`apk add --no-cache curl` resulted in a "Permission denied" error).  
-  To keep the image unchanged and avoid building a custom image, I switched to using `wget`, which is available by default. The healthcheck looks like this:
+3. **Kafka-UI Healthcheck:**  
+I initially wanted to use `curl` to check the `/actuator/health` endpoint, but the official `provectuslabs/kafka-ui` image does not include `curl` and installing it at runtime failed due to lack of permissions (`apk add --no-cache curl` resulted in a "Permission denied" error).  
+To keep the image unchanged and avoid building a custom image, I switched to using `wget`, which is available by default. The healthcheck looks like this:
   ```yaml
   healthcheck:
     test: ["CMD-SHELL",
@@ -338,8 +335,21 @@ While setting up healthchecks for containers, I faced a couple of interesting ch
   - `wget -qO- http://localhost:8080/actuator/health` fetches the health endpoint and outputs the response to stdout.
   - `grep -q '"status":"UP"'` searches for the string `"status":"UP"` in the response.
   - If `grep` finds the string, it exits with code `0` (success), signaling the container is healthy.
-  - If not found, `grep` exits with code `1` (failure), marking the container as unhealthy.
+  - If not found, `grep` exits with code `1` (failure), marking the container as unhealthy.   
 
+
+4. **Alpine Image and gRPC Protoc Plugin Compatibility**
+While building the application Docker image, I initially used an Alpine-based Maven image (`maven:3.9.9-eclipse-temurin-21-alpine`) for its small size and efficiency. However, during the `mvn package` step, I encountered the following error:
+
+```
+PROTOC FAILED: /app/dummy-child-module/target/protoc-plugins/protoc-gen-grpc-java-1.70.0-linux-x86_64.exe: program not found or is not executable
+```
+
+- **Root Cause Analysis (RCA):**  
+Upon investigation, I discovered that the gRPC Java protoc plugin is compiled against `glibc` (GNU C Library), while Alpine Linux uses `musl libc`. This incompatibility prevents the plugin from running on Alpine-based images.
+
+- **Solution:**  
+To resolve this, I switched the build stage base image from `maven:3.9.9-eclipse-temurin-21-alpine` (Alpine/musl) to `maven:3.9.9-eclipse-temurin-21` (Debian/glibc). This change allowed the gRPC protoc plugin to execute successfully during the build process.   
 
 ---
 
@@ -389,7 +399,7 @@ Developing Fleet has been a rewarding experience, offering numerous insights and
 
 7. **Vault**  
 Vault is used to securely store both static and dynamic secrets for the Fleet application. For simplicity, token-based authentication is currently implemented, and the Vault server is running in development mode. The Vault UI can be accessed at:  
-[http://vault-0:8201/ui](http://vault-0:8201/ui)  
+[http://127.0.0.1:8201/ui/](http://127.0.0.1:8201/ui/)  
 
   - **How Vault Fits Fleet's Current and Future Needs:**  
     - **Transit Engine**: Vault can be used to encrypt and decrypt sensitive data (e.g., customer or driver information) without exposing encryption keys to the application. This ensures data security during transit.  
@@ -404,7 +414,15 @@ Vault is used to securely store both static and dynamic secrets for the Fleet ap
   - Setting up a reliable Kafka environment was crucial for Fleet's event-driven architecture. Learning how to properly configure Kafka and ZooKeeper in Docker Compose presented challenges, particularly with setting proper environment-variables, healthchecks etc. I'm using **Confluent Kafka and Zookeeper** as many enterpises are utilizing it.
 
   - Links referred:
-    - https://www.geeksforgeeks.org/getting-started-with-spring-boot-3-kafka-over-docker-with-docker-composeyaml/
+    - https://www.geeksforgeeks.org/getting-started-with-spring-boot-3-kafka-over-docker-with-docker-composeyaml/   
+
+9. **Multi-Stage Docker Builds & Distroless Images**  
+Learned how to write efficient multi-stage Docker builds to minimize image size and improve security. Utilized distroless images for the runtime stage, resulting in lightweight containers with a reduced attack surface.
+  - Links referred:
+    - https://youtu.be/dwVPvZAPaxQ?si=FQKNxrB4xJxAH_Kc
+    - https://github.com/GoogleContainerTools/distroless/blob/main/java/README.md
+    - https://bell-sw.com/blog/distroless-containers-for-security-and-size/
+    - https://console.cloud.google.com/artifacts/docker/distroless/us/gcr.io/java21-debian12?inv=1&invt=AbyJhg
 ---
 
 ## Installation 🛠️

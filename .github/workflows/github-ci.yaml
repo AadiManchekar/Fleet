@@ -14,10 +14,6 @@ jobs:
       contents: write
       actions: write
       packages: write
-    strategy:
-      matrix:
-        java-version:
-        - 21
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
@@ -27,16 +23,7 @@ jobs:
         java-version: 21
         distribution: temurin
         cache: maven
-    - name: Resolve Maven Dependencies and Plugins
-      run: mvn dependency:resolve dependency:resolve-plugins
-    - name: Check formatting with Spotless
-      run: mvn spotless:check
-    - name: Spin up Docker Compose
-      continue-on-error: false
-      uses: hoverkraft-tech/compose-action@v2.0.1
-      with:
-        compose-file: ./tools/docker/docker-compose.yaml
-    - name: Compile and Test
+    - name: Build and Test
       run: |
         cd tools/build
         chmod +x ./compile.sh

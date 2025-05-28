@@ -201,12 +201,17 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+### Python Integration tests ###
+fleet-it
+
 # C extensions
 *.so
 
 # Distribution / packaging
 .Python
 build/
+# Keep this directory (java)
+!tools/build/
 develop-eggs/
 dist/
 downloads/
