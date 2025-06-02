@@ -54,7 +54,7 @@
         <maven-surefire-plugin>3.5.3</maven-surefire-plugin>
         <protobuf-java.version>3.25.6</protobuf-java.version>
         <spotless-maven-plugin>2.44.3</spotless-maven-plugin>
-        <spring-cloud.version>2024.0.1</spring-cloud.version>
+        <spring-cloud.version>2025.0.0</spring-cloud.version>
         <spring-grpc.version>0.8.0</spring-grpc.version>
         <springdoc-openapi-starter-webmvc-ui>2.8.8</springdoc-openapi-starter-webmvc-ui>
     </properties>
